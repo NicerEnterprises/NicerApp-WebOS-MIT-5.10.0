@@ -1,0 +1,1 @@
+[25-Jun-2025 20:20:33 UTC] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 165675208 bytes) in /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/filePhoenix/cronjobs_calculate_traceroute_averages.php on line 163

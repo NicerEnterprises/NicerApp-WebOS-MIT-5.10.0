@@ -1,0 +1,27 @@
+{
+    "folders" : {
+        "createdAtEpoch-milliseconds" : {
+            "1752634083000" : "/var/www/nicer.app-5.9.z/data/said.by-siteData/photoAlbums/user/nicer_app---Rene_AJM_Veerman/"
+        }
+    },
+    "filesPerFolder" : {
+        "/var/www/nicer.app-5.9.z/data/said.by-siteData/photoAlbums/user/nicer_app---Rene_AJM_Veerman/" : {
+            "fileNames" : {
+                "Screenshot_20250716_021103.png" : {
+                    "createdAtEpoch-milliseconds" : {
+                        "1752636053000" : {
+                            "fileModified-epoch-milliseconds" : "1752636217000"
+                        }
+                    }
+                },
+                "Screenshot_20250716_021119.png" : {
+                    "createdAtEpoch-milliseconds" : {
+                        "1752636055000" : {
+                            "fileModified-epoch-milliseconds" : "1752636338000"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

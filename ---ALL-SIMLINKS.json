@@ -1,0 +1,9 @@
+{
+    "realPaths" : {
+        "/var/www/nicer.app-5.9.z/domains/nicer.app" : "/var/www/nicer.app-5.9.z/code/nicer.app-5.9.0",
+        "/var/www/nicer.app-5.9.z/domains/nicer.app/siteData" : "/var/www/nicer.app-5.9.z/data/nicer.app-siteData",
+
+        "/var/www/nicer.app-5.9.z/domains/said.by" : "/var/www/nicer.app-5.9.z/code/nicer.app-5.9.0",
+        "/var/www/nicer.app-5.9.z/domains/said.by/siteData" : "/var/www/nicer.app-5.9.z/data/said.by-siteData",
+    }
+ }

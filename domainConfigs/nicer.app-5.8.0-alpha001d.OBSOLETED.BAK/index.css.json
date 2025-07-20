@@ -1,0 +1,9 @@
+[
+    "/NicerAppWebOS/3rd-party/jQuery/tooltipster/dist/css/tooltipster.bundle.css",
+    "/NicerAppWebOS/3rd-party/jQuery/spectrum/dist/spectrum.css",
+    "/domainConfig/{$domain}/index.css",
+    "/domainConfig/{$domain}/index.dark.css",
+    "/domainConfig/{$domain}/index.textDecorations.dark.css",
+    "/domainConfig/{$domain}/vividMenu-6.y.z_domain-nicer.app_NicerApp-WebOS-defaultColors.css",
+    "/domainConfig/{$domain}/errors.css"
+]

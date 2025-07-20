@@ -1,0 +1,6 @@
+[19-Jul-2025 20:45:22 UTC] class NicerAppWebOS->getView() : views count incorrect ("docs" count should be exactly 1) for seoValue=none.<br/>
+<pre>$call->headers->_HTTP->status=200, $call->body={
+    "docs": [],
+    "bookmark": "nil",
+    "warning": "_design\/primaryIndex was not used because it does not contain a valid index for this query."
+}</pre>
