@@ -1,0 +1,11 @@
+[27-Jul-2025 16:04:44 UTC] PHP Fatal error:  Uncaught TypeError: basename(): Argument #1 ($path) must be of type string, array given in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/frontpage.php:144
+Stack trace:
+#0 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/frontpage.php(144): basename()
+#1 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/app.dialog.siteContent.php(17): require_once('...')
+#2 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/functions.php(721): include('...')
+#3 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/logic.business/class.NicerAppWebOS.php(464): execPHP()
+#4 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/logic.business/class.NicerAppWebOS.php(317): NicerAppWebOS->getContent__view()
+#5 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/logic.business/class.NicerAppWebOS.php(109): NicerAppWebOS->getContent()
+#6 /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/index.php(41): NicerAppWebOS->getSite()
+#7 {main}
+  thrown in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/frontpage.php on line 144

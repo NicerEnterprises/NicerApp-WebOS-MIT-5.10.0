@@ -172,9 +172,11 @@ na.site = {
     },
 
     initialize : function (desktopDefinition) {
-        var t = this;
+        let t = this;
         t.s = t.settings;
         t.s.c = t.settings.current;
+        t.components = t.c = { dialogs : {}, buttons : {}, menus : {} };
+        let c = t.components;
 
         if (navigator.connection) {
             console.log(`Effective network type: ${navigator.connection.effectiveType}`);
@@ -185,9 +187,6 @@ na.site = {
         }
 
         na.desktop.initialize(desktopDefinition);
-
-        t.components = t.c = { dialogs : {}, buttons : {}, menus : {} };
-        var c = t.components;
 
         na.background.initialize({naSite : t});
         na.backgrounds = na.background;

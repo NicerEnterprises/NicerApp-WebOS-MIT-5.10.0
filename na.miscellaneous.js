@@ -500,7 +500,7 @@ na.m = {
 
         // keep your condtions() REAL fast to execute, and you'll be fine with the following enforced defaults.
         // these defaults keep the entire system as a whole nice & fast :)
-        if (typeof frequency=='undefined' || frequency<20) frequency = 20;
+        if (typeof frequency=='undefined' || frequency < 100) frequency = 100;
         //if (frequency > 30) frequency = 30;
 
         /*
@@ -554,14 +554,14 @@ na.m = {
 
 
 
-            if (na.m.settings.waitForCondition[label]) clearTimeout(na.m.settings.waitForCondition[label]);
-			//if (!na.m.settings.waitForCondition[label]) { // prevents double checks & activations of callback().
+            //if (na.m.settings.waitForCondition[label]) clearTimeout(na.m.settings.waitForCondition[label]);
+			if (!na.m.settings.waitForCondition[label]) { // prevents double checks & activations of callback().
 				na.m.settings.waitForCondition[label] = setTimeout (function () {
 					clearTimeout (na.m.settings.waitForCondition[label]);
 					delete na.m.settings.waitForCondition[label];
 					na.m.waitForCondition (label, condition, callback, frequency, context);
 				}, frequency);
-			//}
+			}
 		}
 		return r;
 	},
@@ -620,7 +620,7 @@ na.m = {
                     a : a,
                     refs : []
                 };
-                na.m.settings.walkArray.circulars.push (cmd);
+                //na.m.settings.walkArray.circulars.push (cmd); // !!! RAM HOG!
                 cmd.idx = na.m.settings.walkArray.circulars.length - 1;
             };
             if (!cd) {
@@ -636,6 +636,12 @@ na.m = {
                 };
 
             };
+            var pass = true;
+            if (typeof a=='object' && a!==null && a.type=='text/css') pass = false;
+            if (typeof a=='object' && a!==null && a.zoom=='') pass = false;
+            if (typeof a=='object' && a!==null && a.tagName) pass = false;
+
+            if (pass)
             for (var k in a) {
                 //if (k=='conditions') debugger;
                 if (!cmd.refs.includes(a[k])) {
@@ -1078,7 +1084,8 @@ na.m = {
                             f.ecEventID = eventID;
                             f.fncIdx = i;
                             f.runningNow = true;
-                            f.completed = f.fnc (ec, eventIdx, p, f);
+                            f.completed = true;
+                                f.fnc (f);
                             na.m.log (24,
                                 'na.m.startEvent() : now starting '+na.m.eventDescriptor(ec,eventIdx,eventID,i,f)
                                 +' : f.completed='+(f.completed?'true':'false')
@@ -1142,6 +1149,7 @@ na.m = {
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
         var
+        debugMe = false,
         numRootEvents = ec.events.length,
         numRootCompletedEvents = 0,
 
@@ -1235,24 +1243,26 @@ na.m = {
             }
         };
 
-        na.m.log (30, 'na.m.eventChainCheck() : report=\n'+na.m.makePlaintextReportForEventChain(ec));
+        //na.m.log (30, 'na.m.eventChainCheck() : report=\n'+na.m.makePlaintextReportForEventChain(ec));
         na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', numRootFunctions='+numRootFunctions, false);
-        na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', validFunctions.length='+validFunctions.length, false);
+        //na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', validFunctions.length='+validFunctions.length, false);
 
-        var debugMe = true;
+        //var debugMe = true;
         if (!na.m.settings.completedFunctions) na.m.settings.completedFunctions = 0;
         if ( numCompletedFunctions === numRootFunctions ) {
             if (debugMe) debugger;
-            setTimeout (function() {
+            if (na.m.settings.timeout_checkChainAgain) clearTimeout (na.m.settings.timeout_checkChainAgain);
+            na.m.settings.timeout_checkChainAgain = setTimeout (function() {
                 na.m.closeEventChain (ec);
-            }, 50);
+            }, 100);
         } else if (
             numCompletedFunctions < validFunctions.length
             && numCompletedFunctions >= na.m.settings.completedFunctions
         ) {
             if (debugMe) debugger;
 
-            setTimeout (function() {
+            if (na.m.settings.timeout_checkChainAgain) clearTimeout (na.m.settings.timeout_checkChainAgain);
+            na.m.settings.timeout_checkChainAgain = setTimeout (function() {
                 na.m.settings.completedFunctions++;
                 na.m.continueRunningEvents (ec);
             }, 100);
@@ -1264,10 +1274,17 @@ na.m = {
                 var
                 //msg = 'endless loop whatsThis='+ec.events[0].root.labels.marker.whatsThis+', stacktrace=\n'+ec.events[0].root.labels.marker.stacktrace,
                 msg = 'endless loop whatsThis='+ec.events[0].root.labels.marker.whatsThis;
-                //console.log ('na.m.eventChainCheck() : '+msg);
+                na.m.log (666, 'na.m.eventChainCheck() : '+msg);
 
-                na.m.eventChainCheck(ec);
-            }, 333, ec);
+                var
+                report = {
+                    plaintext : na.m.makePlaintextReportForEventChain (ec),
+                    html : na.m.makeHTMLreportForEventChain (ec)
+                };
+                console.log (report.plaintext);
+
+                //na.m.eventChainCheck(ec);
+            }, 100, ec);
         }
     },
 
@@ -1277,7 +1294,7 @@ na.m = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
-        if (false) {
+        if (true) {
             var
             report = {
                 plaintext : na.m.makePlaintextReportForEventChain (ec),

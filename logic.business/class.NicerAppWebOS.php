@@ -17,9 +17,10 @@ class NicerAppWebOS {
 
         $this->baseIndentLevel = 1;
 
+        $p1 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR);
+        $this->webRootPath = $p1; // You'll need this.
 
         if (array_key_exists('DOCUMENT_ROOT',$_SERVER) && $_SERVER['DOCUMENT_ROOT']!=='') {
-            $p1 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
             $p2a = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
             $p2b = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
             $p2c = str_replace($p2b.DIRECTORY_SEPARATOR,'', $p2a);
@@ -28,22 +29,27 @@ class NicerAppWebOS {
             $p3 = $this->domain = explode('-', $p2c);
             // TODO : Document this in .../README.md
             $this->domain = $p3[0];
-            $this->webFolder = $p2b;
-            //var_dump($this->webFolder); die();
+            $this->webPath = $p2b;
+            //var_dump($this->webPath); die();
         } else {
             $p2b = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
             $this->path = $p2b;
-            $this->domainFolder = $this->domain = $this->webFolder = explode('/',$_SERVER['PWD'])[5];
+            $this->domainFolder = $this->domain = $this->webPath = explode('/',$_SERVER['PWD'])[5];
         }
 
+        // You'll need this too.
+        $this->domainPath = $this->webRootPath.'/domains/'.$this->domainFolder;
 
         /*
         $dbg = [
             $this->path,
             $this->domainFolder,
-            $this->domain
+            $this->domain,
+            $this->webPath,
+            $this->webRootPath,
+            $this->domainPath
         ];
-        echo '<pre>'; var_dump ($dbg); exit();
+        echo '<pre style="color:green;">'; var_dump ($dbg); echo '</pre>';
         */
 
         $rp_domain = $this->path.'/../../domains/'.$this->domainFolder.'/domainConfig';
@@ -110,7 +116,7 @@ class NicerAppWebOS {
         if (array_key_exists('_desktopDefinition',$content))
             $desktopDefinition = $content['_desktopDefinition'];
         else
-            $desktopDefinition = file_get_contents ($rp_domain.'/index.desktopDefinition.json');
+            $desktopDefinition = file_get_contents ($rp_domain.'/index.desktopDefinition.default.json');
 
         $replacements = array (
             //'{$view}' => ( is_array($view) ? json_encode($view, JSON_PRETTY_PRINT) : '{}' ),
@@ -121,6 +127,8 @@ class NicerAppWebOS {
                     ? $content['_title']
                     : execPHP($titleFile),
             '{$domain}' => $this->domain,
+            '{$webPath}' => $this->webPath,
+            '{$domainPath}' => $this->domainPath,
             '{$cssLinks}' => $cssLinks,
             '{$javascriptLinks}' => $javascriptLinks,
             '{$desktopDefinition}' => $desktopDefinition,
@@ -417,9 +425,9 @@ class NicerAppWebOS {
                     $viewsFolder = '-$viewsFolder NOT FOUND-';
                     foreach ($view as $appFolder => $app) {
                         //echo '<pre>'; var_dump ($app); die();
-                        if (array_key_exists('webPath',$app)) $viewsFolder = $this->webFolder.'/'.$app['webPath'];
-                        if (array_key_exists('appFolder',$app)) $viewsFolder = $this->webFolder.$app['appFolder'];
-                        if (array_key_exists('appFolder',$view)) $viewsFolder = $this->webFolder.$view['appFolder'];
+                        if (array_key_exists('webPath',$app)) $viewsFolder = $this->webPath.'/'.$app['webPath'];
+                        if (array_key_exists('appFolder',$app)) $viewsFolder = $this->webPath.$app['appFolder'];
+                        if (array_key_exists('appFolder',$view)) $viewsFolder = $this->webPath.$view['appFolder'];
                         break;
                     }
                     //foreach ($view as $viewsFolder => $viewSettings) {
@@ -459,8 +467,11 @@ class NicerAppWebOS {
                                 //echo '<pre> t666b'; var_dump ($contentFile);// die();
                                 if (strpos($contentFile['realPath'], 'app.dialog.')!==false) {
                                     $divID = str_replace('app.dialog.', '', basename($contentFile['realPath']));
-                                    $divID = str_replace('.php', '', $divID);
                                     //echo $divID.'<br/>';
+                                    $divID = preg_replace('/2D.*\.php/', '', $divID);
+                                    $divID = str_replace('.php', '', $divID);
+                                    $divID = str_replace('.', '', $divID);
+                                    echo $divID.'<br/>';
                                     $ret[$divID] = execPHP ($contentFile['realPath']);
                                 }
                             }
@@ -776,20 +787,20 @@ class NicerAppWebOS {
             //echo '<pre>'; var_dump ($files2); var_dump ($this->path); echo '</pre>';
 
             foreach ($files2 as $idx => $file) {
-                //trigger_error ($file.' (1)', E_USER_NOTICE);
-                $oFile = $this->path.$file;
-                //var_dump ($oFile); die();
                 $file = str_replace ('apps/{$domain}', 'apps/'.$this->viewsMID, $file);
                 $file = str_replace ('apps/'.$this->domainFolder, 'apps/'.$this->viewsMID, $file);
                 $file = str_replace ('{$domain}', $this->domainFolder, $file);
-                $file = realpath($this->path.$file);
-                //if (strpos($file,'index.css')!==false) { echo '<pre style="color:blue;">'; var_dump (pathinfo($file)); echo '</pre>'; }
-                //trigger_error ($file.' (2)', E_USER_NOTICE);
+                $file = str_replace ('{$webPath}', $this->webPath, $file);
+                $file = str_replace ('{$domainPath}', $this->domainPath, $file);
+                $oFile = $file;
+                //echo '<pre style="color:blue;background:white">'.$file; var_dump (file_exists($file)); echo '</pre>';
+
                 if (file_exists($file)) {
                     $url = str_replace ($_SERVER['DOCUMENT_ROOT'], '', $file);
                     $url = str_replace ($this->path,'',$url);
-
+                    $url = str_replace ($this->webPath,'',$url);
                     $url = str_replace (realpath($this->path.'/../..'),'',$url);
+                    if (substr($url,0,1)!=='/') $url = '/'.$url;
 
                     //if (strpos($file,'index.css')!==false) { echo '<pre>'; var_dump ($file); echo PHP_EOL; var_dump ($url); echo '</pre>'; };
                     if (strpos($url, 'zingtouch')!==false) $lineSrc = "\t".'<script type="module"> import { ZingTouch } from \'{$src}?c={$changed}\';</script>'."\r\n"; else {
@@ -800,17 +811,17 @@ class NicerAppWebOS {
 
                     }
                     $search = array ('{$src}', '{$changed}');
-                    $replace = array ($url, date('Ymd_His', filemtime($this->path.'/'.$file)));
+                    $replace = array ($url, date('Ymd_His', filemtime($file)));
                     $lines .= str_replace ($search, $replace, $lineSrc);
                 } else {
                     $errMsg = '<p>File "'.$this->path.$file.'" is missing (oFile='.$oFile.'), referenced from <span class="naCMS_getLinksFileRec">'.json_encode($fileRec).'</span>.</p>';
                     echo $errMsg;
+                    //echo '<pre>'; echo json_encode(debug_backtrace(),JSON_PRETTY_PRINT); echo '</pre>';
                     trigger_error ($errMsg, E_USER_NOTICE);
                 }
             }
         }
-        //echo '<pre>'; var_dump ($files2); die();
-        //echo '<pre>'; var_dump ($lines); die();
+        //echo '<pre>'; var_dump ($files2); echo '</pre><pre>'; var_dump (htmlentities($lines)); echo '</pre>'; die();
         return $lines;
     }
 
@@ -933,7 +944,7 @@ class NicerAppWebOS {
             $files[$idx] = str_replace($this->path, '', $file['realPath']);
         }
         sort($files);
-        return array_merge ([ '/NicerAppWebOS/logic.vividUserInterface/v6.y.z/2D/button-4.2.0/themes.css' ], $files);
+        return array_merge ([ '{$webPath}/NicerAppWebOS/logic.vividUserInterface/v6.y.z/2D/button-4.2.0/themes.css' ], $files);
     }
 
     public function getVividButtonJavascriptFiles () {

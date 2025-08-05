@@ -12,18 +12,18 @@ na.desktop = na.d = {
         var t = this;
         t.g = {
             animationSpeed : 300,//'slow',
-            divs : [ '#siteTaskbar', '#siteDateTime', '#siteErrors', '#btnOptions', '#btnLoginLogout', '#btnChangeBackground', '#siteContent', '#siteVideo', '#siteVideoSearch', '#siteComments', '#siteStatusbar', '#siteToolbarThemeEditor', '#siteToolbarLeft', '#siteToolbarRight', '#siteToolbarTop' ],
+            divs : [ '#siteTaskbar', '#siteDateTime', '#siteErrors', '#btnOptions', '#btnLoginLogout', '#btnChangeBackground', '#siteContent', '#siteYoutubePlayer', '#siteYoutubeSearch', '#siteComments', '#siteStatusbar', '#siteToolbarThemeEditor', '#siteToolbarLeft', '#siteToolbarRight', '#siteToolbarTop' ],
             configs : {
                 'background' : [ ],
-                'all' : [ '#siteContent', '#siteVideo', '#siteVideoSearch', '#siteStatusbar' ],
+                'all' : [ '#siteContent', '#siteYoutubePlayer', '#siteYoutubeSearch', '#siteStatusbar' ],
                 'content' : [ '#siteContent' ],
                 'contentStatusbar' : [ '#siteContent', '#siteStatusbar' ],
-                'contentMusicAndMusicSearch' : [ '#siteContent', '#siteVideo', '#siteVideoSearch' ],
-                'contentMusicComments' : [ '#siteContent', '#siteVideo', '#siteComments' ],
+                'contentMusicAndMusicSearch' : [ '#siteContent', '#siteYoutubePlayer', '#siteYoutubeSearch' ],
+                'contentMusicComments' : [ '#siteContent', '#siteYoutubePlayer', '#siteComments' ],
                 'contentComments' : [ '#siteContent', '#siteComments' ],
                 'comments' : [ '#siteComments' ],
-                'musicAndMusicSearch' : [ '#siteVideo', '#siteVideoSearch' ],
-                'musicComments' : [ '#siteVideo', '#siteComments' ],
+                'musicAndMusicSearch' : [ '#siteYoutubePlayer', '#siteYoutubeSearch' ],
+                'musicComments' : [ '#siteYoutubePlayer', '#siteComments' ],
                 'contentAndToolbarRight' : [ '#siteContent', '#siteToolbarRight' ]
             },
             defaultPos : {
@@ -46,13 +46,13 @@ na.desktop = na.d = {
                     height : $(window).height()/10,
                     opacity : 0.0001
                 },
-                '#siteVideo' : {
+                '#siteYoutubePlayer' : {
                     top : $('#siteDateTime').height()+20,
                     left : $(window).width()+100,
                     opacity : 0.0001
                 },
-                '#siteVideoSearch' : {
-                    top : $('#siteDateTime').height()+20+$('#siteVideo').height()+10,
+                '#siteYoutubeSearch' : {
+                    top : $('#siteDateTime').height()+20+$('#siteYoutubePlayer').height()+10,
                     left : $(window).width()+100,
                     width : !na.m.userDevice.isPhone ? 300 : $(window).width() - 50,
                     opacity : 0.0001
@@ -178,10 +178,17 @@ na.desktop = na.d = {
         //na.d.s.visibleDivs.push('#siteToolbarThemeEditor');
         if (!na.d.s.visibleDivs.includes('#siteContent')) na.d.s.visibleDivs.push('#siteContent');
 
-        //var cr = $.extend(true, {}, na.desktop.settings.negotiateOptions );
-        var cr = JSON.parse(JSON.stringify(na.desktop.settings.negotiateOptions));
-        while (JSON.stringify(cr).match('conditions')) {
-            var cr = t.parseOptions(t, cr);
+        var
+        //cr = JSON.parse(JSON.stringify(na.desktop.settings['jsCodeParamsFor:::na.desktop.parseOptions']))
+        cr = na.desktop.settings['jsCodeParamsFor:::na.desktop.parseOptions'],
+        scr = JSON.stringify(cr);
+        while (
+            scr.indexOf('conditions')!==-1
+            || scr.indexOf('jsCodeFunction')!==-1
+        ) {
+            //debugger;
+            cr = t.parseOptions(t, cr);
+            scr = JSON.stringify(cr);
         }
         var calculationResults = na.desktop.settings.calculationResults = {
             calculationResults_visible : cr
@@ -190,7 +197,9 @@ na.desktop = na.d = {
        cr.order = [];
        cr.order.push ('#siteTaskbar');
        //cr.order.push ('#siteToolbarThemeEditor');
+       if (na.d.s.visibleDivs.includes('#siteToolbarTop')) cr.order.push('#siteToolbarTop');
        if (na.d.s.visibleDivs.includes('#siteToolbarLeft')) cr.order.push('#siteToolbarLeft');
+       if (na.d.s.visibleDivs.includes('#siteToolbarThemeEditor')) cr.order.push('#siteToolbarThemeEditor');
        if (na.d.s.visibleDivs.includes('#siteToolbarRight')) cr.order.push('#siteToolbarRight');
        cr.order.push ('#siteContent');
 
@@ -328,11 +337,11 @@ na.desktop = na.d = {
                             //divs[divID].width -= ( na.d.g.margin );
                         }
                         break;
-                    case '#siteVideo':
+                    case '#siteYoutubePlayer':
                         divs[divID].left -= (na.d.g.margin);
                         divs[divID].top += (2 * na.d.g.margin );
                         break;
-                    case '#siteVideoSearch':
+                    case '#siteYoutubeSearch':
                     case '#siteToolbarRight':
                         divs[divID].height -= na.d.g.margin;
                         break;
@@ -340,7 +349,7 @@ na.desktop = na.d = {
                         divs[divID].height -= (2*na.d.g.margin);
                         divs[divID].left += na.d.g.margin;
                         divs[divID].width -= (2 * na.d.g.margin);
-                        if (na.d.s.visibleDivs.includes('#siteVideo')) divs[divID].top += na.d.g.margin;
+                        if (na.d.s.visibleDivs.includes('#siteYoutubePlayer')) divs[divID].top += na.d.g.margin;
                         //if (visibleDivs.includes('#siteDateTime')) {
                             divs[divID].top += (2 * na.d.g.margin );
                             divs[divID].height -= (2 * na.d.g.margin );
@@ -763,29 +772,103 @@ na.desktop = na.d = {
 //debugger;
         na.m.walkArray (dd, dd, null, t.parseOptions_walkValue, false, p);
 //debugger;
+        /*
         var
         dd2 = t.arrayUnique ([].concat(dd )),
         dd3 = [{}];
         for (var i in dd2[0]) {
             dd3[0] = Object.assign(dd3[0], dd2[0][i]);
-        }
+        }*/
 
-        return dd3;
+        debugger;
+        return dd;
     },
 
     parseOptions_walkValue : function (cd) {
+        const kc = 'jsCodeParam:::conditions';
+        const kcm1 = 'jsCodeParam:::conditionsMet';
+        const kcm2 = 'jsCodeParam_conditionsMet:::';
+        const kcf = 'jsCodeParam:::conditionsFailed';
+        var ka1 = parseInt(cd.k);
+
+
         if (typeof cd.v == 'object')
+            var ka2 = 0, ka3 = 0;
             for (var k1 in cd.v) {
-                if (k1=='conditions') {
+                if (k1===kc) {
                     var vResult = cd.params.t.parseOptions_conditions(cd);
-                    if (vResult) cd.at[cd.k] = cd.v.conditionsMet; else cd.at[cd.k] = cd.v.conditionsFailed;
+                    if (vResult) cd.at[cd.k] = cd.v[kcm1]; else cd.at[cd.k] = cd.v[kcf];
                     return true;
                 }
-            }
+                if (k1.substr(0,'jsCodeFunction:::'.length)==='jsCodeFunction:::') {
+                    var
+                    p = k1.split(':::'),
+                    p1 = p[1].match(/^(.*?)\(\'(.*?)\'\).*?$/i),
+                    p2 = p1[2].split(',,'),
+                    p7 = {};
+                    ka2++;
+                    ka3 = 0;
+                    for (var i=0; i<p2.length; i++) {
+                        var
+                        p3 = p2[i].split('::'),
+                        p4 = p3[1].split(','),
+                        p5 = { 'jsCodeParam:::conditions' : [], 'jsCodeParam:::conditionsMet' : cd.v[k1], 'jsCodeParam:::conditionsFailed' : {} },
+                        p5a = { "jsVar" : "na.d.s.visibleDivs", "jsVarIncludes" : "#siteContent" },
+                        p6 = { 'jsCodeParam:::conditions' : [], 'jsCodeParam:::conditionsMet' : cd.v[k1], 'jsCodeParam:::conditionsFailed' : {} },
+                        p6a = { "jsVar" : "na.d.s.visibleDivs", "jsVarExcludes" : "#siteContent" };
+                        if (!cd.at[''+(ka1+ka2)]) cd.at[''+(ka1+ka2)] = {};
+                        if (!cd.at[''+(ka1+ka2)][kc]) cd.at[''+(ka1+ka2)][kc] = {};
+                        if (p3[0]==='visible')
+                            for (var j=0; j<p4.length; j++) {
+                                ka3++;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3] = p5a;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3].jsVarIncludes = p4[j];
+                            };
+                        if (p3[0]==='invisible')
+                            for (var j=0; j<p4.length; j++) {
+                                ka3++;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3] = p6a;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3].jsVarExcludes = p4[j];
+                            };
+
+                        //p7 = $.extend(p7,p5);
+                        //cd.at[''+(ka1+ka2)] = $.extend (cd.at[''+(ka1+ka2)], p5);;
+                        };
+                    //debugger;
+                    if (
+                        typeof cd.v[k1]=='string'
+                        && cd.v[k1].substr(0,kcm2.length)===kcm2
+                    ) {
+                        //debugger;
+                        if (!cd.at[''+(ka1+ka2-1)]) cd.at[''+(ka1+ka2-1)]= {};
+                        cd.at[''+(ka1+ka2)][kcm1] = eval(cd.v[k1].split(':::')[1]+'()');
+                    };
+                    //delete cd.v[k1];
+                    if (cd.path=='/3') debugger;
+                }
+                var pointer = na.m.chaseToPath (cd.root, cd.path+'/'+cd.k);
+                if (cd.path=='/3') debugger;
+
+                //delete cd.at[''+(ka1+ka2)];
+            };
+            var pointer = na.m.chaseToPath (cd.root, cd.path+'/'+cd.k);
+            //debugger;
+            //delete pointer;
+            //debugger;
+            //delete cd.root[''+cd.k];
+
+
+            //debugger;
+            //delete cd.root['0'];
+
+
+            //delete cd.at[''+(ka1+ka2)];
+            //delete cd.at[cd.k];
     },
 
     parseOptions_conditions : function (cd) {
-        for (var i=0; i < cd.v.conditions.length; i++) {
+        const kc = 'jsCodeParam:::conditions';
+        for (var i=0; i < cd.v[kc].length; i++) {
             var clauseResult = cd.params.t.parseOptions_clauseResult (cd, i);
             if (!clauseResult) return false;
         }
@@ -793,22 +876,29 @@ na.desktop = na.d = {
     },
 
     parseOptions_clauseResult : function (cd, i) {
-        if (typeof cd.v.conditions[i].jsVar=='string') {
-            if (!cd.v.conditions[i].jsVar.match(/[\w\.]+/)) {
+        const kc = 'jsCodeParam:::conditions';
+        if (typeof cd.v[kc][i].jsVar=='string') {
+            if (!cd.v[kc][i].jsVar.match(/[\w\.]+/)) {
                 return false;
             }
             if (
-                typeof cd.v.conditions[i].jsVarIncludes=='string'
-                && eval(cd.v.conditions[i].jsVar).includes(cd.v.conditions[i].jsVarIncludes)
+                typeof cd.v[kc][i].jsVarIncludes=='string'
+                && eval(cd.v[kc][i].jsVar).includes(cd.v[kc][i].jsVarIncludes)
+            ) {
+                return true;
+            }
+            if (
+                typeof cd.v[kc][i].jsVarExcludes=='string'
+                && !eval(cd.v[kc][i].jsVar).includes(cd.v[kc][i].jsVarExcludes)
             ) {
                 return true;
             }
         }
 
-        if (typeof cd.v.conditions[i].htmlSelector=='string'
-            && typeof cd.v.conditions[i].cssPropertyName=='string'
-            && cd.v.conditions[i].isNotExactly
-            && $(cd.v.conditions[i].htmlSelector).css(cd.v.conditions[i].cssPropertyName) !== cd.v.conditions[i].isNotExactly
+        if (typeof cd.v[kc][i].htmlSelector=='string'
+            && typeof cd.v[kc][i].cssPropertyName=='string'
+            && cd.v[kc][i].isNotExactly
+            && $(cd.v[kc][i].htmlSelector).css(cd.v[kc][i].cssPropertyName) !== cd.v[kc][i].isNotExactly
         ) return true;
 
         return false;

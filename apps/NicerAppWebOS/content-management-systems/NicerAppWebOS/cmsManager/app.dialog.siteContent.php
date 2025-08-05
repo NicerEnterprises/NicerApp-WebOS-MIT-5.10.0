@@ -76,16 +76,155 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 </div>
 <div id="document" class="naVividTabPage" style="height:calc(100% - 70px)">
     <div id="document_navBar" class="navbar" style="display:flex">
-        <div class="sections">
-            <div class="navbar_section navbarTheme_navy">
+        <div class="sections" style="display:flex;">
+            <div class="navbar_section navbarTheme_navy" style="display:flex;">
+<?php
+    global $naWebOS;
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'tinymce.activeEditor.execCommand("mceLink");',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'btnInsertLink.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'na.cms.onclick_insertMedia()',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'btnInsertMedia.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'tinymce.activeEditor.execCommand("mceLink");',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'btnInsertPageBackground.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+
+?>
+<!--
                     <img id="btnInsertLink" class="navbar_button" src="/siteMedia/btnInsertLink.png" onclick="tinymce.activeEditor.execCommand('mceLink');"/>
                     <img id="btnInsertMedia" class="navbar_button" src="/siteMedia/btnInsertMedia.png" onclick="na.cms.onclick_insertMedia()"/>
                     <img id="btnInsertPageBackground" class="navbar_button" src="/siteMedia/btnInsertPageBackground.png"/>
+-->
             </div>
-            <div class="navbar_section navbarTheme_navy">
+            <div class="navbar_section navbarTheme_navy" style="display:flex;">
+<?php
+    global $naWebOS;
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'na.cms.onclick_publish(event);',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'iconPublish.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'na.cms.onclick_editHeaders(event);',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'btnSettings2a.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+    echo $naWebOS->html_vividButton (
+        1, 'width:100%;height:50px;',
+
+        'btnAddUser',
+        'vividButton_icon_50x50 grouped navbar_button', '_50x50', 'grouped',
+        '',
+        'na.cms.onclick_btnTree(event);',
+        'na.site.settings.menus[\'#btnAddUser_menu\'].showMenu(null, true)',
+        '',
+
+        403, 'Add user',
+
+        'btnCssVividButton_outerBorder.png',
+        null,//'btnCssVividButton.yellow4a.png',
+        null,//'btnCssVividButton_iconBackground.png',
+        'btnTree.png',//.$naWebOS->dbs->userIDicon,
+
+        '',
+
+        null, null, null
+    );
+
+?>
+
+            <!--
                     <img id="btnPublish" class="navbar_button" src="/siteMedia/iconPublish.png" onclick="na.cms.onclick_publish(event);"/>
                     <img id="btnSettingsHeaders" class="navbar_button" src="/siteMedia/btnSettings2a.png" onclick="na.cms.onclick_editHeaders(event);"/>
                     <img id="btnTree" class="navbar_button" src="/siteMedia/btnTree.png" onclick="na.cms.onclick_btnTree(event);"/>
+            -->
             </div>
             <div class="navbar_section">
                     <!--<label id="documentLabel_label" for="documentLabel">Label</label>-->
@@ -121,8 +260,8 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 
     <script type="text/javascript">
     //document.addEventListener('DOMContentLoaded', () => {
-    setTimeout (function() {
-        //$(document).ready(function() {
+    //setTimeout (function() {
+        $(document).ready(function() {
         
         /*
         TINYMCE BUGREPORT : 
@@ -173,8 +312,8 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
                     tinymce.ready = true;   
                 }
             });
-       // });
-    }, 500);
+        });
+    //}, 500);
     </script>
 </div>
 <div id="user" class="naVividTabPage">

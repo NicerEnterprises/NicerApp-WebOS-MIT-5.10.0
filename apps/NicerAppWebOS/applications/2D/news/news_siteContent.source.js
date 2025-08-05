@@ -42,6 +42,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                 },
                 
 				onload : function (settings) {
+                    debugger;
                     $('.lds-facebook').fadeIn('normal');
                     na.m.waitForCondition ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news start', na.m.HTMLidle, function () {
                         var

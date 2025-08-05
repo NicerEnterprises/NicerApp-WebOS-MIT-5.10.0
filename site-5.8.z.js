@@ -37,8 +37,8 @@ na.site = {
         // NOTE : all of these na.site.globals app get overridden by values stuck in databases of some sort (lol),
         //          and are listed by the index.php file as 'var naGlobals', before merging it's (sub-)values.
         domain : 'nicer.app',
-        domainPath : '/var/www/nicer.app-5.9.0/',
-        domainWWWroot : 'nicer.app-5.9.0',
+        domainPath : '/var/www/nicer.app-5.10.0/',
+        domainWWWroot : 'nicer.app-5.10.0',
         domainFolder : 'nicer.app',
 
         // these are all pixel values, without the CSS 'NNNNpx' notation.
@@ -55,7 +55,11 @@ na.site = {
             current : {},
             events : [],
             eventIdx : 0
-        }
+        },
+        loadingApps : false,
+        running_loadTheme: false,
+        running_loadContent : false,
+        running_saveTheme : false
     },
     apps : {},
 
@@ -221,7 +225,13 @@ na.site = {
                         switch (el.id) {
                             case 'siteTaskbar' : c.taskbar = d; break;
                             case 'siteSettingsMenu' : c.settingsMenu = d; break;
-                            default : if ($('#'+el.id+' > .vividDialogContent').html().trim()!=='{$div_'+el.id+'}') { c.dialogs['#'+el.id] = d;  }break;
+                            default :
+                                if (
+                                    $('#'+el.id+' > .vividDialogContent')[0]
+                                    && $('#'+el.id+' > .vividDialogContent').html().trim()
+                                        !=='{$div_'+el.id+'}'
+                                ) { c.dialogs['#'+el.id] = d; }
+                                break;
                         }
                     });
                     $('#btnSettings img').hover (function() {
@@ -269,16 +279,19 @@ na.site = {
                     $('.lds-facebook').fadeOut('normal');
 
                     t.startTooltips();
-                    setTimeout (function(){
+                    /*setTimeout (function(){
                         na.background.next('#siteBackground');
                     }, 60 * 1000)
                     //na.background.next('#siteBackground');
+                    */
 
                     na.te.onload('siteContent');
                     t.setSpecificity();
-                    na.desktop.resize(na.site.onload_phase2, true);
+                    //na.desktop.resize(na.site.onload_phase2, true);
 
-                    na.site.loadContent_displayContent ($('#siteContent .vividDialogContent').html());
+                    na.site.settings.loadingApps = false;
+                    na.site.settings.running_loadContent = false;
+                    //na.site.loadContent_displayContent ($('#siteContent .vividDialogContent').html());
                 });
 
 
@@ -848,7 +861,7 @@ na.site = {
             debugger;
             History.pushState (null, '', document.location.origin+url);
         } else if (url.indexOf('/')===-1) {
-            History.pushState (null, '', document.location.origin+'/view/'+url);
+            History.pushState (null, '', document.location.origin+'/view-content/'+url);
         } else debugger;
 
         event.preventDefault();
@@ -863,7 +876,6 @@ na.site = {
 		var
 		c = na.site.settings,
         lcc = c.loadContent.current;
-        debugger;
 
         evt.preventDefault();
 
@@ -910,7 +922,6 @@ na.site = {
 
         na.m.log (200, 'na.s.c.stateChange(2) : na.site.settings.url='+state.url);
         na.site.settings.url = state.url;
-        debugger;
         na.site.loadContent_getContent (ec, url1); // also displays the content
 	},
 
@@ -1049,7 +1060,6 @@ na.site = {
                     na.site.ajaxFail(fncn, JSON.stringify(app), xhr, textStatus, errorThrown);
                 }
             };
-            debugger;
 
             ac.url = ac.url.replace('\/\/','/');
             $.ajax(ac);
@@ -1086,8 +1096,8 @@ na.site = {
         c = na.site.settings,
         lc = c.loadContent,
         lcc = lc.current;
-        debugger;
 
+        /*
         // stage 001 : call the .ondestroy() handler for all running apps
         for (var appID in na.apps.loaded) {
             var app = na.apps.loaded[appID];
@@ -1103,6 +1113,7 @@ na.site = {
             }, 500, appID);
         }
         na.apps.loaded = {};
+        */
 
 /*
         // stage 002 : hide all the toolbar DIVs (apps loaded in this loadContent() call will have to make them visible again themselves during their onload() code call
@@ -1128,7 +1139,6 @@ na.site = {
         c.divsInitializing = [];
 
         // stage 003 : attempt to decode the HTTP-delivered JSON that supplies the HTML and JS for the new page (url2a) and all the apps on that page.
-        debugger;
         try {
             var dat = JSON.parse(data);
         } catch (error) {
@@ -1218,38 +1228,80 @@ na.site = {
             loadContent_displayContent : {
                 labels : { marker : { whatsThis : fncn+'::na.m.runFunctions() called' } },
                 newFunctions : [
-                    { initializeScriptsForApps : [na.m.newEventFunction (na.site.initializeScriptsForApps, { dat : dat })] },
-                    { initializeApps : [na.m.newEventFunction(na.site.initializeApps, { dat : dat })] },
-                    { resizeApps : [na.m.newEventFunction(function() {
-                        na.m.waitForCondition ('loadContent_displayContent : na.m.HTMLidle() && !na.site.settings.loadingApps?', function () {
-                            return
+                    { initializeScriptsForApps : [na.m.newEventFunction (function(f) {
+                        na.m.waitForCondition('loadContent_displayContent::initializeScriptsForApps', function(f) {
+                            return na.m.HTMLidle();
+                        }, function (f) {
+                            na.site.initializeScriptsForApps(f);
+                        }, null, f);
+                    }, { dat : dat })] },
+
+                    { initializeApps : [na.m.newEventFunction(function(f) {
+                        na.m.waitForCondition('loadContent_displayContent::initializeApps', function(f) {
+                            var r =
                                 na.m.HTMLidle()
-                                && !na.site.settings.loadingApps;
-                        }, function () {
+                                && !na.site.settings.current.startingApps;
+                            return r;
+                        }, function(f) {
                             debugger;
+                            na.site.initializeApps(f, function() {
+                                debugger;
+                                na.site.settings.loadingApps = false;
+                            });
+                        }, null, f);
+                    }, { dat : dat })] },
+
+                    { resizeApps : [na.m.newEventFunction(function(f) {
+                        na.m.waitForCondition ('loadContent_displayContent::resizeApps : na.m.HTMLidle() && !na.site.settings.loadingApps?', function (f) {
+                            var r =
+                                na.m.HTMLidle()
+                                && !na.site.settings.loadingApps
+                                && na.site.settings.current.scriptsLoaded===true;
+                            debugger;
+                            return r;
+                        }, function (f) {
                             $('#siteContent > .vividDialogContent').css({
                                 display : 'block',
                                 position : 'relative'
                             });
-                            na.site.resizeApps();
+                            na.site.resizeApps(f);
+                            debugger;
                             na.site.settings.running_loadContent = false;
-                        }, 100);
+                        }, null, f);
                     }, { dat : dat })] },
+
                     //{ getPageSpecificSettings : [na.m.newEventFunction (na.site.getPageSpecificSettings)] },
-                    { loadTheme : [na.m.newEventFunction (function() {
-                        na.m.waitForCondition ('loadContent_displayContent : na.m.HTMLidle() && !na.site.settings.running_loadContent?', function () {
-                            return
+                    { loadTheme : [na.m.newEventFunction (function(f) {
+                        na.m.waitForCondition ('loadContent_displayContent::loadTheme : na.m.HTMLidle() && !na.site.settings.running_loadContent?', function () {
+                            var r =
                                 na.m.HTMLidle()
                                 && !na.site.settings.running_loadContent;
-                        }, function () {
+                            return r;
+                        }, function (f) {
+                            debugger;
                             na.site.loadTheme (null, null, true, true);
-                        }, 100);
+                        }, null, f);
                     })] },
-                    { reloadMenu : [na.m.newEventFunction(na.site.reloadMenu)] },
+
+                    { reloadMenu : [na.m.newEventFunction (function(f) {
+                        na.m.waitForCondition ('loadContent_displayContent::loadTheme : na.m.HTMLidle() && !na.site.settings.running_loadContent?', function () {
+                            var r =
+                                na.m.HTMLidle()
+                                && !na.site.settings.running_loadTheme
+                                && !na.site.settings.running_loadContent;
+                            return r;
+                        }, function (f) {
+                            debugger;
+                            na.site.reloadMenu();
+                        }, null, f);
+                    })] },
+
                     { loadTheme_cleanup : [na.m.newEventFunction (function() {
-                        na.m.waitForCondition ('loadContent_displayContent : na.m.HTMLidle() && !na.site.settings.running_loadTheme?', function () {
-                            return na.m.HTMLidle() && !na.site.settings.running_loadTheme
+                        na.m.waitForCondition ('loadContent_displayContent::loadTheme_cleanup : na.m.HTMLidle() && !na.site.settings.running_loadTheme?', function () {
+                            var r = na.m.HTMLidle() && !na.site.settings.running_loadTheme;
+                            return r;
                         }, function () {
+                            debugger;
                             if (!na.site.globals.themes[na.site.globals.themeName].themeSettings)
                                 na.site.globals.themes[na.site.globals.themeName].themeSettings = { // gets initialized through na.onload_phase2() calling na.loadTheme()
                                     Dialogs : {}, // filled in below here.
@@ -1257,19 +1309,22 @@ na.site = {
                                     Extras :  na.te.transform_jsTree_to_siteGlobalsThemes() // pulls data modified by end-users from the Theme Editor back into this na.saveTheme() AJAX call
                                 };
                             na.site.globals.themes[na.site.globals.themeName].themeSettings.Apps = {};
-                            na.te.onload(); // results in excess /view/logs data
+                            //na.te.onload(); // results in excess /view/logs data
                             na.site.globals.themes.default = na.site.loadTheme_fetchDialogs();
-                        }, 100);
+                        }, null);
                     })] },
+
                     { initializeVivids : [na.m.newEventFunction(function(){
-                        na.m.waitForCondition ('na.site.initializeVivids() : na.m.HTMLidle()?', function () { return na.m.HTMLidle() && !na.site.settings.running_loadContent}, na.site.startUIvisuals, 100);
+                        na.m.waitForCondition ('loadContent_displayContent::initializeVivids : na.m.HTMLidle()?', function () { return na.m.HTMLidle() && !na.site.settings.running_loadContent}, na.site.startUIvisuals, null);
                     })] },
+
                     { renderAllCustomHeadingsAndLinks : [na.m.newEventFunction(function(){
-                        na.m.waitForCondition ('na.site.renderAllCustomHeadingsAndLinks() : na.m.HTMLidle()?', function () { return na.m.HTMLidle() && !na.site.settings.running_loadContent}, na.site.renderAllCustomHeadingsAndLinks, 100);
+                        na.m.waitForCondition ('loadContent_displayContent::renderAllCustomHeadingsAndLinks : na.m.HTMLidle()?', function () { return na.m.HTMLidle() && !na.site.settings.running_loadContent}, na.site.renderAllCustomHeadingsAndLinks, null);
                     })] }
                 ]
             }
         }));
+        this.completed = true;
     },
 
     startUIvisuals : function (divID, callback) {
@@ -1278,7 +1333,7 @@ na.site = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
-        if (typeof startLogo=='function') startLogo('neCompanyLogo', 'countryOfOriginColors');
+        //if (typeof startLogo=='function') startLogo('neCompanyLogo', 'countryOfOriginColors');
 
 
         $('.vividDialog'/*, vdc[0]*/).each(function(idx,el){
@@ -1359,7 +1414,7 @@ na.site = {
 
     },
 
-    initializeScriptsForApps : function (ec, eventIdx, eventParams, f) {
+    initializeScriptsForApps : function (f) {
     /*
      * LICENSE : https://opensource.org/license/mit
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
@@ -1378,13 +1433,15 @@ na.site = {
         },
         vd = na.desktop.settings.visibleDivs,
         c = na.site.settings.current,
-        eventData = ec.events[eventIdx],
+        eventData = f.ec.events[f.ecEventIdx],
         i = 0,
-        dat = eventParams.dat;
+        dat = f.params.dat;
 
+        /*
         c.loadingApps = true;
         c.startingScripts = false;
         c.startingApps = true;
+        */
         c.divsInitializing = [];
 
         eventData.fncn = fncn;
@@ -1446,14 +1503,21 @@ na.site = {
                         na.site.transformLinks($('#'+divID2)[0]);
                         na.site.renderAllCustomHeadingsAndLinks();
 
+                        /* handled by vdc.html() above here in this code block instead
+                        var inlineScripts = $('script:not([src])', vdc);
+                        for (var i=0; i<inlineScripts.length; i++) {
+                            eval (inlineScripts[i].innerText);
+                        }
+                        */
+
                         var
-                        scripts = dat[divID2].match(/\/NicerAppWebOS\/.*\.js.*"/g),
+                        scripts = dat[divID2].match(/\/NicerAppWebOS\/.*?\.js.*?"/g),
                         //scripts = dat[divID2].match(/\/NicerAppWebOS\/.*\.js?.*"/g), doesnt work
                         scriptIdx = 0;
 
-                        console.log (divID2, scripts);
-                        debugger;
+                        na.m.log (101, divID2, scripts);
                         if (scripts) {
+                            c.scriptsLoaded = 0;
                             while (scriptIdx < scripts.length) {
                                 var src = scripts[scriptIdx].replace(/"/g,'');
                                 if ($('head script[src="'+src+'"]').length===0) {
@@ -1490,20 +1554,19 @@ na.site = {
         return false;
     },
 
-    initializeApps : function (ec, eventIdx, eventParams, f, callback) {
+    initializeApps : function (f, callback) {
     /*
      * LICENSE : https://opensource.org/license/mit
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
-    debugger;
-        if (ec) {
+        if (f) {
             var
             fncn = 'na.site.loadContent():::5::na.site.initializeApps()',
             about = { activity : na.m.log (20, 'call all na.apps.loaded[appID].settings.loadedIn[divID].onload() handlers for all {divID in eventParams.dat}', false) },
             c = na.site.settings.current,
-            eventData = ec.events[eventIdx],
-            dat = eventParams.dat;
+            eventData = f.ec.events[f.ecEventIdx],
+            dat = f.params.dat;
 
             eventData.fncn = fncn;
             eventData.about = about;
@@ -1511,6 +1574,10 @@ na.site = {
             var
             fncn = 'na.site.initializeApps()';
         }
+
+        c.loadingApps = false;
+        c.startingScripts = false;
+
 
         //na.m.log (6, 'na.site.initializeApps() : stacktrace='+na.m.stacktrace());
 
@@ -1523,8 +1590,6 @@ na.site = {
 
         na.m.waitForCondition (fncn+' : are the apps loaded, and their scripts fully loaded into the page\'s <HEAD>? na.m.HTMLidle()?', function () {
             var r = na.m.HTMLidle();//na.m.WebOSidle===too restrictive,
-               // debugger;
-            if (!na.site.settings.current.startingApps) debugger;
             return r;
         }, function () { //[1]
                 var c = na.site.settings.current;
@@ -1562,6 +1627,7 @@ na.site = {
                                 if (typeof handlers.onload == 'function') {
                                     c.divsInitializing.push({divID:divID});
                                     na.m.log (50, fncn+' : #'+divID+' : Now calling na.apps.loaded["'+appID+'"].settings.loadedIn["#'+divID+'"].onload();');
+                                    debugger;
                                     handlers.onload ({
                                         callbackParams : [ divID ],
                                         callback : function (divID) {
@@ -1581,7 +1647,7 @@ na.site = {
                     c.loadingApps = false;
                 }
             },
-        100);
+        100, callback);
         return false;
     },
 
@@ -1616,33 +1682,32 @@ na.site = {
         }
     },
 
-    resizeApps : function (ec, eventIdx, eventParams, f) {
+    resizeApps : function (f) {
     /*
      * LICENSE : https://opensource.org/license/mit
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
-    debugger;
         var fncn = 'na.site.resizeApps()';
-        if (typeof ec=='object') {
+        if (typeof f=='object') {
             var
             fncn = 'na.site.loadContent():::6::na.site.resizeApps()',
             about = { activity : na.m.log (20, 'call all na.apps.loaded[appID].settings.loadedIn[divID].onresize() handlers for all {divID in eventParams.dat}', false) },
             c = na.site.settings.current,
-            eventData = ec.events[eventIdx],
-            dat = eventParams.dat,
+            eventData = f.ec.events[f.ecEventIdx],
+            dat = f.params.dat,
             cb = function() { if (typeof appID=='string') na.site.appResized(appID, f); };
 
             eventData.fncn = fncn;
             eventData.about = about;
 
-        } else if (typeof ec=='function') {
+        } else if (typeof f=='function') {
             var
-            cb = ec;
+            cb = f;
             //debugger;
         }
 
-        na.m.waitForCondition (fncn+' : na.m.HTMLidle() && !na.site.settings.current.loadingApps?', function() {
+        na.m.waitForCondition (fncn+' : na.m.HTMLidle() && !na.site.settings.current.loadingApps?', function(f) {
             var r =
                 na.m.HTMLidle()
                 //&& !na.site.settings.current.startingApps // DON'T! messes up initial-page loads.
@@ -1659,7 +1724,7 @@ na.site = {
                 ) r = false;
             };
             return r;
-        }, function () {
+        }, function (f) {
             na.site.settings.current.numAppsResizing = 0;
             na.site.settings.current.numAppsResized = 0;
             na.site.settings.current.appsResizing = {};
@@ -1679,21 +1744,19 @@ na.site = {
             }
 
             //debugger;
-            if (called === 0 && ec && !ec.called) {
-                ec.called = true;
+            if (called === 0 && f.ec && !f.ec.called) {
+                f.ec.called = true;
                 cb();
             }
 
-            debugger;
             if (f) {
                 f.runningNow = false;
                 f.completed = true;
                 setTimeout(function() {
                     $('.vividDialog').css({overflow:'visible'});
-                }, 1000);
-
+                }, 300);
             }
-        }, 250);
+        }, 250, f);
     },
 
     appResized : function (appID, f) {
@@ -2619,14 +2682,13 @@ na.site = {
                     $('head').append(data2).delay(100);
                 }
                 if (doSwitchSpecificities) {
-                    debugger;
                     if (ct && !na.site.globals.themes[ct.theme]) {
                         na.site.globals.themes[ct.theme] = ct;
                         na.site.globals.themeName = ct.theme;
                     } else {
                         if (theme) na.site.globals.themeName = theme;
                     }
-                    na.setSpecificity(true);
+                    na.site.setSpecificity(true);
                 }
                 setTimeout(function () {
                     if (typeof callback=='function') callback(true);
@@ -2800,7 +2862,6 @@ na.site = {
             }
 
         }*/
-debugger;
         if (loadBackground && dat.background /*&& dat.background!==na.site.globals.background*/) { /* doesn't jive with na.loadContent() */
             na.background.next (
                 '#siteBackground',
@@ -3115,7 +3176,7 @@ debugger;
             }*/
 
             themeData = na.site.loadTheme_fetchDialogs(themeData);
-            na.site.loadTheme_applySettings (themeData, null, false); // apply theme changes, all except .background in this case.
+            //IS THIS NECESSARY?? na.site.loadTheme_applySettings (themeData, null, false); // apply theme changes, all except .background in this case.
             na.site.globals.themes[na.site.globals.themeName] = $.extend({}, themeData);
 
             // ENCAPSULATE (ENCODE) json objects for HTTP transport

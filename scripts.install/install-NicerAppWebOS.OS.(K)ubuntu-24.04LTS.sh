@@ -28,12 +28,10 @@ apt upgrade
 
 apt dist-upgrade
 
-apt install aptitude ufw
+apt install -y nginx apache2 php8 curl git unzip zip aptitude ufw
 
-echo 'Allowing in traffic on this machine on ports 80 (http), 443 (https), and 5984 (couchdb).'
-ufw allow 80
+echo 'Allowing in traffic on this machine on port 443 (https).'
 ufw allow 443
-ufw allow 5984
 
 aptitude install composer apache2 php php8.3-gd php-dev libapache2-mod-php php-imap curl php-curl php-mailparse curl git imagemagick npm net-tools apt-transport-https gnupg wordnet libauthen-ntlm-perl libclass-load-perl libcrypt-ssleay-perl libdata-uniqid-perl libdigest-hmac-perl libdist-checkconflicts-perl libencode-imaputf7-perl libfile-copy-recursive-perl libfile-tail-perl libio-compress-perl libio-socket-inet6-perl libio-socket-ssl-perl libio-tee-perl libmail-imapclient-perl libmodule-scandeps-perl libnet-dbus-perl libnet-ssleay-perl libpar-packer-perl libreadonly-perl libregexp-common-perl libsys-meminfo-perl libterm-readkey-perl libtest-fatal-perl libtest-mock-guard-perl libtest-mockobject-perl libtest-pod-perl libtest-requires-perl libtest-simple-perl libunicode-string-perl liburi-perl libtest-nowarnings-perl libtest-deep-perl libtest-warn-perl make cpanminus nodejs node-gyp libnode-dev npm dovecot-imapd pass gh
 

@@ -509,7 +509,7 @@ seductiveapps.menu = seductiveapps.vividMenu = {
 			}
 		};
 
-		// for now, only resize the #siteVideo dialog based on var furthestAway
+		// for now, only resize the #siteYoutubePlayer dialog based on var furthestAway
 		if (componentInstanceHTMLid=='musicMenu') {
 			// hardcoding aint always evil
 			var 

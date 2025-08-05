@@ -69,7 +69,6 @@ na.background = na.bg = {
     next : function (div, search, url, saveTheme, callback, callStack) {
         var t = na.background;
         var fncn = 'na.background.next()';//na.m.myName(t);
-        debugger;
         na.m.waitForCondition (fncn+' : t.data?', function() {
             return t.data;
         }, function() {
@@ -87,6 +86,27 @@ na.background = na.bg = {
             search = 'landscape';
         };
         t.settings.backgroundSearchKey = search;
+
+
+        var oldBSK = na.site.globals.backgroundSearchKey;
+        if (oldBSK==='' || oldBSK=='landscape' || oldBSK=='portrait') {
+            if ( parseFloat($(window).width()) > parseFloat($(window).height()) )
+                na.site.globals.backgroundSearchKey
+                    = na.site.globals.backgroundSearchKey.replace ('portrait', 'landscape');
+            else
+                na.site.globals.backgroundSearchKey
+                    = na.site.globals.backgroundSearchKey.replace ('landscape', 'portrait');
+        }
+        /*
+        if (oldBSK !== '' && oldBSK != na.site.globals.backgroundSearchKey)
+            na.backgrounds.next (
+                '#siteBackground',
+                na.site.globals.backgroundSearchKey,
+                null,
+                false
+            );
+        */
+
         if (saveTheme!==false) saveTheme = true;
 
         var

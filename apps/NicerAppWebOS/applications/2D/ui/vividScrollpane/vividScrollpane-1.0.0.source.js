@@ -204,7 +204,7 @@ seductiveapps.sp = seductiveapps.vividScrollpane = {
 		if (!s) debugger; // gotta get fixed at some point
 		var t = sa.vcc.getVividTheme (s.themeName); 
 		
-		//if (baseID=='siteVideoSearch') debugger;
+		//if (baseID=='siteYoutubeSearch') debugger;
 		
 		sa.m.log (2, 'sa.vividScrollpane.initScrollpane(): for initID='+s.initID+'; Constructing scrollpane HTML for id="'+scrollpane.id+'" and class="'+scrollpane.className+'".');
 		
@@ -1017,7 +1017,7 @@ seductiveapps.sp = seductiveapps.vividScrollpane = {
 					}, 500);*/
 				}
 
-				//if (baseID=='siteVideoSearch') debugger;
+				//if (baseID=='siteYoutubeSearch') debugger;
 				/*
 				if (contentDimensions) {
 					item.sliderbar.style.height = '100%';

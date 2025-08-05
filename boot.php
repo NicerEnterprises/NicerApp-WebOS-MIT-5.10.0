@@ -211,22 +211,35 @@ NicerApp WebOS from Nicer Enterprises
         echo '</pre>';
     };
     //echo '<pre>t555'; var_dump ($_SERVER); exit();
+
+
+    $_SESSION['started'] = time();//microtime(true);
+    global $date;
+    $now = DateTime::createFromFormat('U', $_SESSION['started']);
+    $now->setTimezone(new DateTimeZone(exec('date +%z')));
+    //$date = $now->format("Y-m-d_H:i:s.u");
+    $dateLog =
+        $now->format("Y/m/d-l/H/i-s_")
+        .str_replace(
+            '+','plus',
+            preg_replace('/.*\s/','',date(DATE_RFC2822))
+        );
+    $date =
+        $now->format("Y/m/d-l H:i:s-")
+        .' (Amsterdam.NL timezone; CEST)';
+            /*
+        .str_replace(
+            '+','plus',
+            preg_replace('/.*\s/','',date(DATE_RFC2822))
+        );*/
+
+
     if (
         $_SERVER['SCRIPT_NAME']=='/NicerAppWebOS/index.php'
         || $_SERVER['SCRIPT_NAME']=='/NicerAppWebOS/db_init.php'
     ) {
-        $_SESSION['started'] = time();//microtime(true);
         $_SESSION['startedID'] = cdb_randomString(50);
 
-        $now = DateTime::createFromFormat('U', $_SESSION['started']);
-        $now->setTimezone(new DateTimeZone(exec('date +%z')));
-        //$date = $now->format("Y-m-d_H:i:s.u");
-        $date =
-            $now->format("Y/m/d-l/H/i-s_")
-            .str_replace(
-                '+','plus',
-                preg_replace('/.*\s/','',date(DATE_RFC2822))
-            );
         $naBot = stripos($_SERVER['HTTP_USER_AGENT'], 'bot')!==false;
         //echo '<pre>t584'; var_dump($naBot); die();
 
@@ -257,18 +270,6 @@ NicerApp WebOS from Nicer Enterprises
         $_SESSION['naErrors_startup'] = [];
         $_SESSION['naErrors_js'] = [ 'bootup' => [] ];
     } elseif ($_SERVER['SCRIPT_NAME']=='/NicerAppWebOS/db_init.php') {
-        $_SESSION['started'] = time();//microtime(true);
-
-        $now = DateTime::createFromFormat('U', $_SESSION['started']);
-        $now->setTimezone(new DateTimeZone(exec('date +%z')));
-        //$date = $now->format("Y-m-d_H:i:s.u");
-        $date =
-            $now->format("Y/m/d-l/H/i-s_")
-            .str_replace(
-                '+','plus',
-                preg_replace('/.*\s/','',date(DATE_RFC2822))
-            );
-        //echo $date.'<br/>'; exit();
 
         $na_error_log_filepath_html =
             $naWebOS->path.'/siteLogs/'

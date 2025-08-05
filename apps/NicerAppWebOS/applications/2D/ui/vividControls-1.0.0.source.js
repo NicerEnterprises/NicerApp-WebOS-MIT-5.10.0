@@ -787,7 +787,7 @@ seductiveapps.vcc = seductiveapps.vividControls = {
                 if (d.timeoutScrollpaneUpdates) clearTimeout(d.timeoutScrollpaneUpdates);
                 if (sbhf.length>0) {						
                     //setTimeout (function () {
-                        //if (componentInstanceHTMLid=='siteVideoSearch') {
+                        //if (componentInstanceHTMLid=='siteYoutubeSearch') {
                         if (
                             (
                                 !sp 
@@ -1107,7 +1107,7 @@ seductiveapps.vcc = seductiveapps.vividControls = {
 			if (maxHeaderHeight>0) maxHeaderHeight += 5;
 			if (maxFooterHeight>0) maxFooterHeight += 5;
 					 
-			//if (componentInstanceHTMLid=='siteVideoSearch') debugger;		 
+			//if (componentInstanceHTMLid=='siteYoutubeSearch') debugger;
             var
             h = jQuery(headers[idx])[0].style.height,
 			css = {
@@ -1273,7 +1273,7 @@ seductiveapps.vcc = seductiveapps.vividControls = {
                 if (el.offsetTop < mtf) mtf = el.offsetTop;
             });
             
-            if (componentInstanceHTMLid=='siteVideoSearch') debugger;
+            if (componentInstanceHTMLid=='siteYoutubeSearch') debugger;
             jQuery('#'+componentInstanceHTMLid+'__content').css ({ // content window inside vividDialog
                 top : mt + mh + 5,
                 height : jQuery(dialog).height - mt - mh - 10 - (mtf===0?0:mtf+5),
@@ -1681,7 +1681,7 @@ seductiveapps.vcc = seductiveapps.vividControls = {
 		
 		for (var prop in cssPropsToExtrapolate) {
 
-            //if (dialogJqueryID=='#siteVideoSearch' && ignoreSidebarsHeadersAndFooters === true) debugger;
+            //if (dialogJqueryID=='#siteYoutubeSearch' && ignoreSidebarsHeadersAndFooters === true) debugger;
 			if (ignoreSidebarsHeadersAndFooters === true) {
 				var
 				pv = cssPropsToExtrapolate[prop],

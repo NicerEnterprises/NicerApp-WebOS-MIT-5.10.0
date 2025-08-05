@@ -2,7 +2,7 @@ sa.apps.loaded.search_youtube  = {
 	settings : { 
 		ready : true,
 		loadedIn : {
-			'#siteVideoSearch' : {
+			'#siteYoutubeSearch' : {
 				settings : {
 					initialized : false,
                     onresizeTimer : undefined
@@ -18,26 +18,26 @@ sa.apps.loaded.search_youtube  = {
 					
 					/* done from sa.desktop already!
 					jQuery(window).resize(function(){
-						siteVideoSearch_resize();
+						siteYoutubeSearch_resize();
 					});
-					sa.vcc.settings['siteVideoSearch'].afterResize = sa.m.traceFunction(function () {
-						siteVideoSearch_resize();
+					sa.vcc.settings['siteYoutubeSearch'].afterResize = sa.m.traceFunction(function () {
+						siteYoutubeSearch_resize();
 					});
 					*/
 					
 					/*
 					sa.m.fireAppEvent ({
-						divName : '#siteVideoSearch',
+						divName : '#siteYoutubeSearch',
 						eventName : 'onresize'
 					});*/
-					//siteVideoSearch_resize();
+					//siteYoutubeSearch_resize();
 					
-					if (!jQuery('#siteVideoSearch__dialog')[0]) return false;
+					if (!jQuery('#siteYoutubeSearch__dialog')[0]) return false;
 					
 					
-					jQuery('#siteVideoSearch__dialog')[0].appendChild (jQuery('#siteVideoSearch__header')[0].parentNode.removeChild(jQuery('#siteVideoSearch__header')[0]));
-					//jQuery('#siteVideoSearch')[0].appendChild (jQuery('#siteVideoSearch__footer')[0].parentNode.removeChild(jQuery('#siteVideoSearch__footer')[0]));
-					jQuery('#siteVideoSearch')[0].appendChild (jQuery('#siteVideoSearch__content')[0].parentNode.removeChild(jQuery('#siteVideoSearch__content')[0]));
+					jQuery('#siteYoutubeSearch__dialog')[0].appendChild (jQuery('#siteYoutubeSearch__header')[0].parentNode.removeChild(jQuery('#siteYoutubeSearch__header')[0]));
+					//jQuery('#siteYoutubeSearch')[0].appendChild (jQuery('#siteYoutubeSearch__footer')[0].parentNode.removeChild(jQuery('#siteYoutubeSearch__footer')[0]));
+					jQuery('#siteYoutubeSearch')[0].appendChild (jQuery('#siteYoutubeSearch__content')[0].parentNode.removeChild(jQuery('#siteYoutubeSearch__content')[0]));
 					
 					
 					
@@ -48,52 +48,52 @@ sa.apps.loaded.search_youtube  = {
 					
 					//sa.apps.loaded.search_youtube.onPage('frontpage');
 					//debugger;
-					//if (sa.s.c.settings.current.visible['#siteVideoSearch']) {
+					//if (sa.s.c.settings.current.visible['#siteYoutubeSearch']) {
 						
 						
-						/* RE-ENABLE LATER (disabled 2017-04-16) sa.apps.loaded.search_youtube(jQuery('#siteVideoSearch_input').val());*/
+						/* RE-ENABLE LATER (disabled 2017-04-16) sa.apps.loaded.search_youtube(jQuery('#siteYoutubeSearch_input').val());*/
 						
 						
 						
 					//};
 					//psa.apps.loaded.search_youtube.onResize();
-                    sa.s.c.divertEnterKey(jQuery('#siteVideoSearch__input')[0], function (evt) {
-                        sa.apps.search.search_youtube(jQuery('#siteVideoSearch__input').val());
+                    sa.s.c.divertEnterKey(jQuery('#siteYoutubeSearch__input')[0], function (evt) {
+                        sa.apps.search.search_youtube(jQuery('#siteYoutubeSearch__input').val());
                     });
 
-                    sa.apps.search.search_youtube(jQuery('#siteVideoSearch__input').val());
+                    sa.apps.search.search_youtube(jQuery('#siteYoutubeSearch__input').val());
 
 				},
 				onresize : function (settings) {
                     sa.apps.loaded.search_youtube.onresize();
                     
                     /*
-					if (sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer) {
-                        sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer = setTimeout(function () {
-                            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer);
+					if (sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer) {
+                        sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer = setTimeout(function () {
+                            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer);
                         }, 500);
                         
                     } else {
-                        sa.vcc.applyTheme ('siteVideoSearch');
+                        sa.vcc.applyTheme ('siteYoutubeSearch');
                         
                         setTimeout (function() {
                                 / *
-                                jQuery('#siteVideoSearch__content, #siteVideoSearch__searchresults__table2').css ({
+                                jQuery('#siteYoutubeSearch__content, #siteYoutubeSearch__searchresults__table2').css ({
                                     height : 
-                                        jQuery('#siteVideoSearch').height()
-                                        - jQuery('#siteVideoSearch__header__tr').height()
-                                        - jQuery('#siteVideoSearch__searchresults__header')[0].offsetTop
+                                        jQuery('#siteYoutubeSearch').height()
+                                        - jQuery('#siteYoutubeSearch__header__tr').height()
+                                        - jQuery('#siteYoutubeSearch__searchresults__header')[0].offsetTop
                                 });
                                 * /
 
                                 jQuery('#saApp_search_youtube_thumbViewer__scrollpane, #saApp_search_youtube_thumbViewer__scrollpane__container').css({
                                     height : 
-                                        jQuery('#siteVideoSearch__content').height() 
-                                        - jQuery('#siteVideoSearch__content')[0].offsetTop
-                                        - jQuery('#siteVideoSearch__searchResult_details__td').height() 
+                                        jQuery('#siteYoutubeSearch__content').height()
+                                        - jQuery('#siteYoutubeSearch__content')[0].offsetTop
+                                        - jQuery('#siteYoutubeSearch__searchResult_details__td').height()
                                         - 20
-                                        //- jQuery('#siteVideoSearchIframeContainer').height() 
-                                        //- jQuery('#siteVideoSearch_header_thanks').height() 
+                                        //- jQuery('#siteYoutubeSearchIframeContainer').height()
+                                        //- jQuery('#siteYoutubeSearch_header_thanks').height()
                                         //- jQuery('#musicSearchMenu').height() 
                                 });
                                 //debugger;
@@ -103,8 +103,8 @@ sa.apps.loaded.search_youtube  = {
                                 }, 200);
                         }, 200);
                         
-                        sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer = setTimeout(function () {
-                            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer);
+                        sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer = setTimeout(function () {
+                            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer);
                         }, 500);
                         
                     };
@@ -162,8 +162,8 @@ sa.apps.loaded.search_youtube  = {
 		//jQuery('#'+htmlID).html (html).css({overflow:'visible'}).parents().css({overflow:'visible'});
 		jQuery('#'+htmlID).html (html).css({display:'none'}).fadeIn('slow', function () {
 			//debugger;
-			sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.initialized = true;
-			sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.ready = true;
+			sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.initialized = true;
+			sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.ready = true;
             
             sa.sp.containerSizeChanged (jQuery('#saApp_search_youtube_thumbViewer__scrollpane')[0], true);
 			
@@ -171,7 +171,7 @@ sa.apps.loaded.search_youtube  = {
             
             if (sa.m.settings.initialized.site === true)
                 sa.m.fireAppEvent ({
-                    divName : '#siteVideoSearch',
+                    divName : '#siteYoutubeSearch',
                     eventName : 'onresize'
                 });
 		});
@@ -181,18 +181,18 @@ sa.apps.loaded.search_youtube  = {
 	onresize : function() {
                 //return false;
 		///sa.apps.loaded.search_youtube.settings.resizing = {};
-		//jQuery('#siteVideoSearch_searchresults').css({height:'100%'}); // BAD IDEA
+		//jQuery('#siteYoutubeSearch_searchresults').css({height:'100%'}); // BAD IDEA
 		//sa.sp.containerSizeChanged(jQuery('#saApp_search_youtube_thumbViewer__scrollpane')[0], true);
 		//
 		//
         
-        sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer2 = 'go';
-        if (sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer2) {
-            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer);
-            sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer2 = setTimeout(function () {
+        sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer2 = 'go';
+        if (sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer2) {
+            clearTimeout (sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer);
+            sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer2 = setTimeout(function () {
         
-                jQuery('#siteVideoSearch').animate({opacity:1}, 100, 'swing', function () {
-                sa.vcc.applyTheme ('siteVideoSearch');
+                jQuery('#siteYoutubeSearch').animate({opacity:1}, 100, 'swing', function () {
+                sa.vcc.applyTheme ('siteYoutubeSearch');
                 
                 setTimeout (function() {
                     //debugger;
@@ -203,30 +203,30 @@ sa.apps.loaded.search_youtube  = {
                     //if (sa.apps.loaded.search_youtube.settings.resizeTimeout) clearTimeout (sa.apps.loaded.search_youtube.settings.resizeTimeout);
                     
                     //sa.apps.loaded.search_youtube.settings.resizeTimeout = setTimeout (function () {
-                        jQuery('#siteVideoSearch_header_td, #siteVideoSearch_header_td2, #siteVideoSearch_header_tr').css({height:'1.1em'});
-                        jQuery('#siteVideoSearch_searchResult_details, #siteVideoSearch_searchResult_details_td, #siteVideoSearch_searchResult_details_tr').css({height:'3em'});
+                        jQuery('#siteYoutubeSearch_header_td, #siteYoutubeSearch_header_td2, #siteYoutubeSearch_header_tr').css({height:'1.1em'});
+                        jQuery('#siteYoutubeSearch_searchResult_details, #siteYoutubeSearch_searchResult_details_td, #siteYoutubeSearch_searchResult_details_tr').css({height:'3em'});
                         //jQuery('#saApp_search_youtube_thumbViewer__scrollpane, #saApp_search_youtube_thumbViewer__scrollpane__container, #saApp_search_youtube_thumbViewer__scrollpane_td, #saApp_search_youtube_thumbViewer__scrollpane_tr').css({height:'',left:0});
                         //jQuery('#saApp_search_youtube_thumbViewer__scrollpane').css({height:'auto'});
                         
                         //setTimeout(function() {
                             /*
-                            jQuery('#siteVideoSearch__content').css ({
+                            jQuery('#siteYoutubeSearch__content').css ({
                                 height : 
-                                    jQuery('#siteVideoSearch__contentDimensions').height()
+                                    jQuery('#siteYoutubeSearch__contentDimensions').height()
                             });
                             */
 
                             setTimeout (function () {
                                 var
                                 nh = 
-                                    jQuery('#siteVideoSearch__content').height(),
-                                th = jQuery('#siteVideoSearch__contentDimensions').height();
+                                    jQuery('#siteYoutubeSearch__content').height(),
+                                th = jQuery('#siteYoutubeSearch__contentDimensions').height();
 
                                 
                                 
-                                jQuery('#saApp_search_youtube_thumbViewer__scrollpane, #saApp_search_youtube_thumbViewer__scrollpane__container, #saApp_search_youtube_thumbViewer__scrollpane_td, #saApp_search_youtube_thumbViewer__scrollpane_tr, #siteVideoSearch_searchresults, #saApp_search_youtube_thumbviewer_tr, #saApp_search_youtube_thumbviewer_td, #saApp_search_youtube_thumbViewer__contentDimensions').css ({
+                                jQuery('#saApp_search_youtube_thumbViewer__scrollpane, #saApp_search_youtube_thumbViewer__scrollpane__container, #saApp_search_youtube_thumbViewer__scrollpane_td, #saApp_search_youtube_thumbViewer__scrollpane_tr, #siteYoutubeSearch_searchresults, #saApp_search_youtube_thumbviewer_tr, #saApp_search_youtube_thumbviewer_td, #saApp_search_youtube_thumbViewer__contentDimensions').css ({
                                     left : 0,
-                                    width : jQuery('#siteVideoSearch__content').width(), 
+                                    width : jQuery('#siteYoutubeSearch__content').width(),
                                     //width : '100%',                                                                                                                                                                                                        
                                     height : nh
                                 });
@@ -234,12 +234,12 @@ sa.apps.loaded.search_youtube  = {
                                 
                                 jQuery('#saApp_search_youtube_thumbViewer__scrollpane__container').css({
                                     height : 
-                                        jQuery('#siteVideoSearch__content').height() 
-                                        - jQuery('#siteVideoSearch__content')[0].offsetTop
-                                        - jQuery('#siteVideoSearch__searchResult_details__td').height() 
+                                        jQuery('#siteYoutubeSearch__content').height()
+                                        - jQuery('#siteYoutubeSearch__content')[0].offsetTop
+                                        - jQuery('#siteYoutubeSearch__searchResult_details__td').height()
                                         - 20
-                                        //- jQuery('#siteVideoSearchIframeContainer').height() 
-                                        //- jQuery('#siteVideoSearch_header_thanks').height() 
+                                        //- jQuery('#siteYoutubeSearchIframeContainer').height()
+                                        //- jQuery('#siteYoutubeSearch_header_thanks').height()
                                         //- jQuery('#musicSearchMenu').height() 
                                 });
                                 
@@ -260,7 +260,7 @@ sa.apps.loaded.search_youtube  = {
                                 
                                 
                                 setTimeout(function () {
-                                        delete sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.onresizeTimer;
+                                        delete sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.onresizeTimer;
                                         
 
                                             if (jQuery('.saThumb').length==0) return false;
@@ -312,12 +312,12 @@ sa.apps.loaded.search_youtube  = {
                                             setTimeout (function() {
                                                 
                                                 setTimeout (function() {
-                                                    //jQuery('#siteVideoSearch').animate({opacity:1},{duration:400});
-                                                    sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.resized = true;
+                                                    //jQuery('#siteYoutubeSearch').animate({opacity:1},{duration:400});
+                                                    sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.resized = true;
 
                                                 }, 700);
                                             
-                                                var loaderIcon = sa.apps.loaded.search_youtube.settings.loadedIn['#siteVideoSearch'].settings.loaderIcon;
+                                                var loaderIcon = sa.apps.loaded.search_youtube.settings.loadedIn['#siteYoutubeSearch'].settings.loaderIcon;
                                                 jQuery(loaderIcon).fadeOut('slow', function() {
                                                     jQuery(loaderIcon).remove();
                                                 });
@@ -332,7 +332,7 @@ sa.apps.loaded.search_youtube  = {
                                                     if (r[this.id]) {
                                                         sa.apps.loaded.search_youtube.settings.resizing[this.id+'__mouseenter'] = true;
                                                         clearTimeout (sa.apps.loaded.search_youtube.settings.timeoutForDetails);
-                                                        jQuery('#siteVideoSearch__searchResult__details').html(jQuery(this).attr('titleYoutube')).fadeIn(50);
+                                                        jQuery('#siteYoutubeSearch__searchResult__details').html(jQuery(this).attr('titleYoutube')).fadeIn(50);
                                                         
                                                         var l = this.offsetLeft;
                                                         if (l == 0) {                                            
@@ -342,13 +342,13 @@ sa.apps.loaded.search_youtube  = {
                                                                 }
                                                             });
                                                         } else if (l == 120) {
-                                                            jQuery(this).css({zIndex:99999999}).animate ({left:jQuery(this).offset().left-jQuery('#siteVideoSearch').offset().left-50, width:200,height:112}, {
+                                                            jQuery(this).css({zIndex:99999999}).animate ({left:jQuery(this).offset().left-jQuery('#siteYoutubeSearch').offset().left-50, width:200,height:112}, {
                                                                 done : function () {
                                                                     delete sa.apps.loaded.search_youtube.settings.resizing[this.id+'__mouseenter'];
                                                                 }
                                                             });
                                                         } else if (l == 240) { // 240
-                                                            jQuery(this).css({zIndex:99999999}).animate ({left:jQuery(this).offset().left-jQuery('#siteVideoSearch').offset().left-100, width:200,height:112}, {
+                                                            jQuery(this).css({zIndex:99999999}).animate ({left:jQuery(this).offset().left-jQuery('#siteYoutubeSearch').offset().left-100, width:200,height:112}, {
                                                                 done : function () {
                                                                     delete sa.apps.loaded.search_youtube.settings.resizing[this.id+'__mouseenter'];
                                                                 }
@@ -365,8 +365,8 @@ sa.apps.loaded.search_youtube  = {
                                                             }
                                                         });
                                                         sa.apps.loaded.search_youtube.settings.timeoutForDetails = setTimeout (function () {
-                                                        jQuery('#siteVideoSearch__searchResult__details').fadeOut (400, function () {
-                                                            jQuery('#siteVideoSearch__searchResult__details').html('');
+                                                        jQuery('#siteYoutubeSearch__searchResult__details').fadeOut (400, function () {
+                                                            jQuery('#siteYoutubeSearch__searchResult__details').html('');
                                                         });
                                                         }, 200);
                                                     }
@@ -398,6 +398,6 @@ sa.apps.loaded.search_youtube  = {
 			]
 		};
 		//sa.bg.next_do_step2 ('#siteBackground', o, sa.bg.settings.toUse);
-		sa.site.code.selectMusic(o.layers[0].url, '#siteVideoIframe');
+		sa.site.code.selectMusic(o.layers[0].url, '#siteYoutubePlayerIframe');
 	}
 };

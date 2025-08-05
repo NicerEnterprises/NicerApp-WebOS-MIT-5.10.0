@@ -1,0 +1,2 @@
+[29-Jul-2025 08:06:43 UTC] PHP Warning:  file_put_contents(/var/www/nicer.app-5.10.z/domains/nicer.app/.htaccess): Failed to open stream: Permission denied in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/htaccess.build.php on line 133
+[29-Jul-2025 08:06:43 UTC] PHP Warning:  file_put_contents(/var/www/nicer.app-5.10.z/domains/nicer.app/siteCache/mainmenu.reverse.csv): Failed to open stream: Permission denied in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/htaccess.build.php on line 135

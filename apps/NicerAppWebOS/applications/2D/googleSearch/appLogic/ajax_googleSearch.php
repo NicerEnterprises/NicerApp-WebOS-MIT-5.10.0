@@ -120,7 +120,7 @@ if (
     true 
     ||
 	(
-		array_key_exists('override', $_POST) // manually triggered by #siteVideoSearch_submit vividButton
+		array_key_exists('override', $_POST) // manually triggered by #siteYoutubeSearch_submit vividButton
 		&& $_POST['override'] == 'true'
 	)
 ) {

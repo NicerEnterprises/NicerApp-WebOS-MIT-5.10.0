@@ -4,7 +4,7 @@
 		"perMenu" : {
 			"#musicMenu" : {
 				"itemsPre" : "javascript:na.s.c.selectMusic('",
-				"itemsPost" : "', '#siteVideoIframe');"
+				"itemsPost" : "', '#siteYoutubePlayerIframe');"
 			}
 		}
 	},

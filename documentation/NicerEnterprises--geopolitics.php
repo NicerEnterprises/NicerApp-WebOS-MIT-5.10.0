@@ -35,6 +35,9 @@
             </ul>
             </span>
 
+            <span style="margin:10px;">
+            <h2>Geopolitical Emergency #5: X.COM (in Dutch) : <a href="https://x.com/jimmydijk/status/1949399244781088810" class="nomod noPushState" target="extLinXdotCom-wealthgap">The 10% of wealthiest humans own more than 50% of human assets</a>.</h2>
+            </span>
 
             <span style="margin:10px;">
             <h2>Loneliness is used to drive young men (and women) into militaries. The general population will be 're-stocked' with members from the richest 20% of citizens post-war.</h2>
