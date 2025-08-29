@@ -1,0 +1,27 @@
+{
+    "f" : {
+        "caem" : {
+            "1752634090000" : "/var/www/nicer.app-5.9.z/data/said.by-siteData/photoAlbums/role/said_by---Guests/"
+        }
+    },
+    "ff" : {
+        "/var/www/nicer.app-5.9.z/data/said.by-siteData/photoAlbums/role/said_by---Guests/" : {
+            "fns" : {
+                "Screenshot_20250716_021103.png" : {
+                    "caem" : {
+                        "1752636053000" : {
+                            "fmem" : "1752636217000"
+                        }
+                    }
+                },
+                "Screenshot_20250716_021119.png" : {
+                    "caem" : {
+                        "1752636055000" : {
+                            "fmem" : "1752636338000"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

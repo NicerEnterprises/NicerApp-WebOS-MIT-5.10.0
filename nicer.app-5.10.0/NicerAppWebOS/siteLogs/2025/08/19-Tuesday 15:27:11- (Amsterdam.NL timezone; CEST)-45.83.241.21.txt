@@ -1,0 +1,6 @@
+[19-Aug-2025 13:27:14 UTC] PHP Warning:  require_once(/var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/../../../../domains/owl.nicer.app/domainConfig/mainmenu.items.php): Failed to open stream: No such file or directory in /var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/htaccess.build.php on line 27
+[19-Aug-2025 13:27:14 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/../../../../domains/owl.nicer.app/domainConfig/mainmenu.items.php' (include_path='.:/usr/share/php') in /var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/htaccess.build.php:27
+Stack trace:
+#0 /var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/db_init.php(259): require_once()
+#1 {main}
+  thrown in /var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/scripts.maintenance/htaccess.build.php on line 27
