@@ -1,1 +1,0 @@
-[19-Aug-2025 13:25:18 UTC] PHP Fatal error:  File "/var/www/nicer.app-5.10.z/nicer.app-5.10.0/domains/owl.nicer.app/domainConfig/database.users.json.php" does not exist. in /var/www/nicer.app-5.10.z/nicer.app-5.10.0/NicerAppWebOS/functions.php on line 91

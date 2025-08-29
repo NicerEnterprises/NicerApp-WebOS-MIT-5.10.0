@@ -1,1 +1,0 @@
-[29-Jul-2025 07:26:26 UTC] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 199245824 bytes) in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/frontpage.php on line 240

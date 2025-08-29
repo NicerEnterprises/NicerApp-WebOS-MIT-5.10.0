@@ -1,1 +1,0 @@
-[29-Jun-2025 14:48:09 UTC] PHP Parse error:  syntax error, unexpected identifier "naWebOS_output_debug_info" in /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/frontpage.php on line 74

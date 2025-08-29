@@ -1,1 +1,0 @@
-[29-Jul-2025 09:20:05 UTC] PHP Parse error:  Unmatched '}' in /var/www/nicer.app-5.10.z/code/nicer.app-5.10.0/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer.javascriptRendering/app.dialog.siteContent.php on line 95

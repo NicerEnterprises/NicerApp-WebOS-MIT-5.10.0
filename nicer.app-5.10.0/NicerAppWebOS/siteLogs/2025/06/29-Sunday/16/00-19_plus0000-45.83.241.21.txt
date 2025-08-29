@@ -1,8 +1,0 @@
-[29-Jun-2025 14:00:20 UTC] PHP Fatal error:  Uncaught TypeError: htmlentities(): Argument #1 ($string) must be of type string, array given in /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php:389
-Stack trace:
-#0 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php(389): htmlentities()
-#1 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php(302): NicerAppWebOS->getContent__view()
-#2 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php(98): NicerAppWebOS->getContent()
-#3 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/index.php(44): NicerAppWebOS->getSite()
-#4 {main}
-  thrown in /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php on line 389
