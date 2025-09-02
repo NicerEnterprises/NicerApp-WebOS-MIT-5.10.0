@@ -159,6 +159,7 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 <script type="text/javascript">
     $('#siteToolbarLeft').css({ width : 370 });
     na.desktop.settings.visibleDivs.push('#siteToolbarLeft');
+    na.desktop.resize();
     na.m.waitForCondition ('#siteToolbarLeft::init() : desktopIdle()?', na.m.desktopIdle, function () {
 
         $('#btnAddUser_menu').addClass('noInitialShowing');
@@ -181,7 +182,7 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
         });
 
         na.cms.onload();
-        na.desktop.resize();
+
     }, 100);
 </script>
 

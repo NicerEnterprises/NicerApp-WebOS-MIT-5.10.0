@@ -882,11 +882,13 @@ debugger;
                             for (var j=0; j<p4.length; j++) {
                                 ka3++;
                                 cd.at[''+(ka1+ka2)][kc][''+ka3] = p6a;
+
                                 cd.at[''+(ka1+ka2)][kc][''+ka3].jsVarExcludes = p4[j];
+                                debugger;
                             };
 
                         //p7 = $.extend(p7,p5);
-                        cd.at[''+(ka1+ka2)] = $.extend (cd.at[''+(ka1+ka2)], p5);;
+                        //cd.at[''+(ka1+ka2)] = $.extend (cd.at[''+(ka1+ka2)], p5);;
                         };
                     //debugger;
                     if (
@@ -896,7 +898,9 @@ debugger;
                         //debugger;
                         if (!cd.at[''+(ka1+ka2-1)]) cd.at[''+(ka1+ka2-1)]= {};
                         cd.at[''+(ka1+ka2)][kcm1] = eval(cd.v[k1].split(':::')[1]+'()');
+                        cd.at[''+(ka1+ka2)][kcf] = {};
                     };
+                    debugger;
                 }
                 //var pointer = na.m.chaseToPath (cd.root, cd.path+'/'+cd.k);
                 var pointer = na.m.chaseToPath (cd.root, cd.path);
