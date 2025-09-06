@@ -48,11 +48,11 @@
                 }
                 pn = $(pn).next()[0];
             }
-                if ($(evt.currentTarget).is('.shown')) {
-                    $(evt.currentTarget).removeClass('shown');
-                } else {
-                    $(evt.currentTarget).addClass('shown');
-                }
+            if ($(evt.currentTarget).is('.shown')) {
+                $(evt.currentTarget).removeClass('shown');
+            } else {
+                $(evt.currentTarget).addClass('shown');
+            }
         });
     $('.naDiaryDaySegmentHeader')
         .on('click', function (evt) {
@@ -66,11 +66,11 @@
                 }
                 pn = $(pn).next()[0];
             }
-                if ($(evt.currentTarget).is('.shown')) {
-                    $(evt.currentTarget).removeClass('shown');
-                } else {
-                    $(evt.currentTarget).addClass('shown');
-                }
+            if ($(evt.currentTarget).is('.shown')) {
+                $(evt.currentTarget).removeClass('shown');
+            } else {
+                $(evt.currentTarget).addClass('shown');
+            }
         });
     $('.naDiaryDaySegmentHeader, .naDiaryDayHeader').css({cursor:'hand'}).removeClass('todoList').removeClass('active').addClass('shown');
     $('.naDiaryDaySegment, .naDiaryEntry').hide();
