@@ -264,6 +264,9 @@ na.site = {
                         na.site.onresize ({ reloadMenu : true });
                         na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
                     };
+                    setTimeout(function(){
+                        na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
+                    },1000)
 
                     $('.vividDialog').css ({
                         overflow : 'hidden'

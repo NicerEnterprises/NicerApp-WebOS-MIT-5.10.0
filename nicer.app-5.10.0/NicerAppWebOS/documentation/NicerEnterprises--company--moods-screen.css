@@ -1,0 +1,70 @@
+    .naDiaryWebPage {
+        text-shadow : 0px 0px 7px rgba(0,255,0,0.7), 2px 2px 3px rgba(0,0,0,0.4);
+    }
+
+    .naDiaryDayHeader {
+        color : white;
+    }
+
+    .naDiaryEntry {
+        background : rgba(255,255,255,0.25);
+        color : black;
+    }
+
+    .naDiaryMoodHeader {
+        background : rgba(0,0,100,0.321);
+        color : white;
+    }
+
+    .naDiaryMoodNoteToSelfHeader {
+        background : rgba(0,255,120,0.321);
+        color : black;
+    }
+
+    .naDiaryMoodNotes {
+        color : black;
+    }
+    .naDiaryMoodNotesHeader {
+        background : rgba(255,136,30,0.321);
+        color : yellow;
+    }
+
+        .naDiaryMoodAnger .naDiaryEntryHeader {
+            background : rgba(255,255,255,0.4);
+            color : black;
+        }
+        .naDiaryMoodAnger {
+            background : rgba(255,0,0,0.3);
+            border : 3px ridge (50,50,50,0.751);
+        }
+
+
+        .naDiaryMoodShit .naDiaryEntryHeader {
+            background : yellow;
+            color : brown;
+        }
+        /* dutch royal orange : rgba(255,100,10,0.8); */
+        .naDiaryMoodShit {
+            background : rgba(155,50,10,0.8);
+            border : 3px ridge brown;
+            color : white;
+        }
+
+
+
+        .naDiaryMoodDivinicus .naDiaryEntryHeader {
+            background : rgba(150,150,150,0.5);
+            color : black;
+        }
+        .naDiaryMoodDivinicus {
+            background : rgba(255,0,255,0.5);
+        }
+
+
+        .naDiaryMoodDivineWorld .naDiaryEntryHeader {
+            background : rgba(150,150,150,0.8);
+            color : ivory;
+        }
+        .naDiaryMoodDivineWorld {
+            background : rgba(0, 255, 0,0.35);
+        }
