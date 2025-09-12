@@ -9,5 +9,4 @@
         But it would not take much for the lines to be drawn more lethally.<br/>
         However, when I talk about my own plans; If I even end my own life prematurely, I have always planned an exit by peaceful suicide first and foremost. I don't hate *everyone*, far from it in fact.<br/>
         <a href="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-evidence-incomeDisparity/Screenshot_20250907_123219.png" class="nomod noPushState" target="evidence2A"><img src="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-evidence-incomeDisparity/Screenshot_20250907_123219.png" style="width:350px"/></a>
-        -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, <a href="mailto:rene.veerman.netherlands@gmail.com">rene.veerman.netherlands@gmail.com</a>.
         </div>

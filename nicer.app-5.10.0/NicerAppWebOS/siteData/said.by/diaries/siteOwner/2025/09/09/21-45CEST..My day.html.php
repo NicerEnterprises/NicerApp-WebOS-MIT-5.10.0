@@ -8,9 +8,4 @@
                 And I had a chat with my shrink, my dear psychiatrist lady, that went totally nowhere; she refused to grant me my very reasonable requests that would have freed me from slavitude at last. I'm not happy with her at the moment. <a href="https://x.com/ReneVeerman1977/status/1965362107974840623" class="nomod noPushState" target="xDotCom-2025-09-09-001A">I had even given the idea of torpedo-ing her career real thought</a>, but after a mid day nap I decided against that.
                 <br/>
                 </p>
-
-                <p>
-                <hr>
-                -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, <a href="mailto:rene.veerman.netherlands@gmail.com">rene.veerman.netherlands@gmail.com</a>.
-                </p>
         </div>

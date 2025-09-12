@@ -5,6 +5,4 @@
                 <div class="naImgEvidence"><a href="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051256.png" class="nomod noPushState" target="img2"><img src="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051256.png" style="width:350px"/></a></div>
                 <div class="naImgEvidence"><a href="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051311.png" class="nomod noPushState" target="img3"><img src="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051311.png" style="width:350px"/></a></div>
                 <div class="naImgEvidence"><a href="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051426.png" class="nomod noPushState" target="img4"><img src="/NicerAppWebOS/siteData/said.by/diaries/siteOwner/2025/09/07/photoAlbum-rootkitEvidence001/Screenshot_20250907_051426.png" style="width:350px"/></a></div>
-                <br/>
-                -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, <a href="mailto:rene.veerman.netherlands@gmail.com">rene.veerman.netherlands@gmail.com</a>.
         </div>

@@ -5,5 +5,4 @@
         With you guys and ladies being the true 'wrathful side of The Gods'?<br/>
         Then get your fear- and discomforts-foods exclusively from the youngest human minds from now on (so before 14 years of age).<br/>
         I am *authorizing* 1-year-in-total of fairly intense fear for selected children globally.<br/>
-        -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, rene.veerman.netherlands@gmail.com
         </div>

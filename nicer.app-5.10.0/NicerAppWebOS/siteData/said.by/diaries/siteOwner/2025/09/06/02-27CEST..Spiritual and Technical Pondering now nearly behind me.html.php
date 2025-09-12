@@ -6,5 +6,4 @@
         And i sure as hell don't need dopamine blockers or other brain chemicals altering meds, OTHER THAN sleeping meds that work, preferably produced in a purely natural way.<br/>
         And FOR THE RECORD : I am not in the slightest meglanomaniac for real; <a href="https://tinyurl.com/telepathy-manual" class="nomod noPushState" target="tm1">that email i sent out, was the ramblings of ghosts into my gmail keyboard</a>; and designed to backfire on me. Which it did.<br/>
         As an ASSERTIVE PEACE ACTIVIST, i know it's better to threaten war (much like Putin keeps conventional armies at bay by waving the nuclear deterrent sticks in the media), than it is to actually go to war!<br/>
-        -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, <a href="mailto:rene.veerman.netherlands@gmail.com">rene.veerman.netherlands@gmail.com</a>.
         </div>

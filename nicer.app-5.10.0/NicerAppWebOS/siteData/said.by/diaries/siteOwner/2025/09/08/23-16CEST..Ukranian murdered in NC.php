@@ -6,6 +6,4 @@
                 And naturally I distance myself from such actions. She may have lost her family and friends (but not really or fully or for very long, as all are destined to die sooner or later), but I do owe her compensation for the idea I spread (with my only intent being to report this to authorities for defensive legal and policing measures, which are in design at the moment, I am on these research teams in fact).<br/>
                 This gift will be five-hundred-seventy million Angelic US dollars, no strings attached. Which with access to Heaven's future GDP for my own massive post-death retirement fund, is peanuts for me. I'll gladly help her achieve financial independence for herself and her loved ones.<br/>
                 The attacker should be put in a reasonably comfy psychopaths-only PRISON for THE REST OF HIS LIFE, without the possibility of pardon or parole.
-                <br/>
-                -- Gavan P.U.R.A.D. Hoverswell aka Rene A.J.M. Veerman, <a href="mailto:rene.veerman.netherlands@gmail.com">rene.veerman.netherlands@gmail.com</a>.
         </div>
