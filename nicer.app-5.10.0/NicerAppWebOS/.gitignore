@@ -18,7 +18,6 @@ siteMedia/backgrounds/videos
 siteMedia/backgrounds/*.zip
 siteMedia/backgrounds/landscape*
 siteMedia/backgrounds/portrait*
-siteData
 siteCache
 siteLogs/2023/*
 siteLogs/2024/*
