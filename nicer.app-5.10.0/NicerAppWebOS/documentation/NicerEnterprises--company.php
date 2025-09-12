@@ -16,11 +16,12 @@
     <link type="text/css" rel="StyleSheet" href="/NicerAppWebOS/documentation/NicerEnterprises--company--base.css?c=NOW">
     <link type="text/css" rel="StyleSheet" href="/NicerAppWebOS/documentation/NicerEnterprises--company--moods-screen.css?c=NOW">
 
-    <h1 class="contentSectionTitle2"><span class="contentSectionTitle2_span">Nicer Enterprises - company overview</span></h1>
+    <h1 class="contentSectionTitle2" style="width:fit-content;padding:10px;">Nicer Enterprises - company overview</h1>
     <div>
-        <p>
+        <p style="width:fit-content;padding:10px;">
             <a href="https://nicer.app" target="naHP">https://nicer.app</a>, <a href="https://said.by" target="sbHP">https://said.by</a>, <a href="https://zoned.at" target="zAt">https://zoned.at</a>, <a href="https://github.com/NicerEnterprises" target="githubNicerEnterprises">https://github.com/NicerEnterprises</a>, <br/>in addition to ALL of the content listed at the social media URLs below, <br/>are ENTIRELY
-            Copyrighted (C) 2002-2025 and Owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
+            Copyrighted (C) 2002-2025 and Owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a><br/>
+            a.k.a. Gavan Peacefan Unifier Rotating Angelicus Divinicus Hoverswell.<br/>
         </p>
 
         <?php echo $diaries->getDiary('siteOwner');?>
@@ -41,7 +42,7 @@
             var pn = $(evt.currentTarget).next()[0];
             debugger;
             while ($(pn).is('.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment')) {
-                if ($(evt.currentTarget).is('.shown')) {
+                if (!$(evt.currentTarget).is('.shown')) {
                     $('.naFilePath,ol,ul,.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment',pn).add(pn).hide('slow');
                 } else {
                     $('.naFilePath,ol,ul,.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment',pn).add(pn).show('slow');
@@ -59,7 +60,7 @@
             var pn = $(evt.currentTarget).next()[0];
             debugger;
             while ($(pn).is('.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment')) {
-                if ($(evt.currentTarget).is('.shown')) {
+                if (!$(evt.currentTarget).is('.shown')) {
                     $('.naFilePath,ol,ul,.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment',pn).add(pn).hide('slow');
                 } else {
                     $('.naFilePath,ol,ul,.naDiaryEntry,.naDiaryDay,.naDiaryDaySegment',pn).add(pn).show('slow');

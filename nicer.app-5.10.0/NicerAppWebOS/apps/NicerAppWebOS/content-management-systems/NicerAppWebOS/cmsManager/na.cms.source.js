@@ -1,4 +1,4 @@
-//delete na.cms;
+delete na.cms;
 na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/NicerAppWebOS/cmsManager'] = na.cms = {
     //settings : { current : { mediaFolderView : 'view' } },
     settings : {
@@ -258,7 +258,6 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                                 || rec.type=='naMediaAlbum'
                             )
                         ) {
-                            debugger;
                             if ($(window).width() < 400) {
                                 na.cms.settings.current.activeDialog = '#siteContent';
                                 na.d.s.visibleDivs = arrayRemove(na.desktop.settings.visibleDivs, '#siteToolbarLeft');
@@ -315,7 +314,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                                 || rec.type=='naMediaAlbum'
                             )
                         ) na.site.settings.buttons['#btnDeleteRecord'].enable();
-                    }, 150, data);
+                    }, 50, data);
 
                     //clearTimeout (na.cms.settings.current.timeoutRefresh);
                     //na.cms.settings.current.timeoutRefresh = setTimeout(na.cms.refresh,1000);
@@ -1571,4 +1570,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
             na.cms.onclick_btnViewMedia();
         }, false);
     }
-}
+};
+na.m.waitForCondition ('applications/content-management-systems/NicerAppWebOS/cmsManager start', na.m.HTMLidle, function () {
+//    na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/NicerAppWebOS/cmsManager'].settings.loadedIn['#siteContent'].onload({});
+}, 100);

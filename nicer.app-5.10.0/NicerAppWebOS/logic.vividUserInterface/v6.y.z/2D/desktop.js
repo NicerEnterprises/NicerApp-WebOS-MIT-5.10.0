@@ -108,7 +108,6 @@ na.desktop = na.d = {
             callbacksProgress : [],
             cmds : []
         }, settings);
-        if (!na.m.userDevice.isPhone) t.s.visibleDivs.push ('#siteTaskbar');
 
         $(window).resize(t.resize);
         setTimeout (t.resize, 10);
@@ -173,8 +172,6 @@ na.desktop = na.d = {
         });
 
         if (!na.d.s.visibleDivs.includes('#siteTaskbar')) na.d.s.visibleDivs.push('#siteTaskbar');
-        //na.d.s.visibleDivs.push('#siteToolbarThemeEditor');
-        debugger;
         if (!na.d.s.visibleDivs.includes('#siteContent')) na.d.s.visibleDivs.push('#siteContent');
 
         var
@@ -366,8 +363,12 @@ na.desktop = na.d = {
                             break;
                         case '#siteContent':
                             divs[divID].height -= (2 * na.d.g.margin) - 6;
-                            //divs[divID].left += 2*na.d.g.margin;
-                            divs[divID].width -= (na.d.g.margin);
+                            if (!na.d.s.visibleDivs.includes('#siteToolbarLeft') || na.d.s.visibleDivs.includes('#siteToolbarThemeEditor'))
+                                divs[divID].left += na.d.g.margin;
+                            if (!na.d.s.visibleDivs.includes('#siteToolbarLeft') || na.d.s.visibleDivs.includes('#siteToolbarThemeEditor'))
+                                divs[divID].width -= 2*(na.d.g.margin);
+                            else
+                                divs[divID].width -= (na.d.g.margin);
                             //if (visibleDivs.includes('#siteDateTime')) {
                                 //divs[divID].top += na.d.g.margin;
                                 //divs[divID].height -= na.d.g.margin;
@@ -450,7 +451,6 @@ na.desktop = na.d = {
                 }
             });*/
 
-debugger;
             for (var masterCallbackIdx=0; masterCallbackIdx<section.order.length; masterCallbackIdx++) {
                 na.m.log (10010, fncn+' : issuing animation calls for masterCallbackIdx='+masterCallbackIdx, false);
                 let divID = section.order[masterCallbackIdx];
@@ -468,7 +468,7 @@ debugger;
                             var shown = false;
                             for (var divID2 in divs) if (divID==divID2 && divID2==divID2) { shown = true; break; }
 
-                            na.m.log (15, 'na.c.desktop.goto (divID='+divID+', shown='+shown, false);
+                            na.m.log (15, 'na.c.desktop.resize (divID='+divID+', shown='+shown, false);
 
 
                             //if (divID=='#siteContent') debugger;
@@ -560,7 +560,6 @@ debugger;
                                     }*/
 
                                 if (divID=='#siteContent') {
-                                    debugger;
                                     if (na.d.s.animate) {
                                         $(divID).css ({
                                             display : 'flex'
@@ -694,7 +693,8 @@ debugger;
         var
         fncn = 'na.desktop.masterCallback()',
         eh = na.site.settings.eventHandlers;
-        //na.m.log (15, 'na.c.desktop.masterCallback (divID='+div.id+')');
+
+        na.m.log (15, 'na.c.desktop.masterCallback (divID='+div.id+')');
         if (eh) {
             for (var i=0; i<eh.length; i++) {
                 for (var j in eh[i]) {
@@ -708,6 +708,17 @@ debugger;
                 }
             }
         }
+
+        // call desktop.registerCallback() callbackFunctions,
+        //  same as jQuery.animate({progress:callbackFunction});
+        for (var i=0; i<na.d.s.callbacks.length; i++) {
+            var cb = na.d.s.callbacks[i];
+            if (cb.divID=='#'+div.id && typeof cb.callback=='function') {
+                debugger;
+                cb.callback(cb, div, calculationResults, sectionIdx, section, divOrderIdx);
+            }
+        };
+
 
         var allCompleted = true;
         for (var i=0; i<na.d.s.visibleDivs.length; i++) {
@@ -725,13 +736,6 @@ debugger;
             na.d.s.animating = false;
         }
 
-
-        // call desktop.registerCallback() callbackFunctions,
-        //  same as jQuery.animate({progress:callbackFunction});
-        for (var i=0; i<na.d.s.callbacks.length; i++) {
-            var cb = na.d.s.callbacks[i];
-            if (cb.divID=='#'+div.id && typeof cb.callback=='function') cb.callback(cb, div, calculationResults, sectionIdx, section, divOrderIdx);
-        };
 
 
         // and now call the na.c.desktop equivalent of jQuery.animate({complete:callbackFunction})
@@ -875,16 +879,15 @@ debugger;
                         if (p3[0]==='visible')
                             for (var j=0; j<p4.length; j++) {
                                 ka3++;
-                                cd.at[''+(ka1+ka2)][kc][''+ka3] = p5a;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3] = $.extend({},p5a);
                                 cd.at[''+(ka1+ka2)][kc][''+ka3].jsVarIncludes = p4[j];
                             };
                         if (p3[0]==='invisible')
                             for (var j=0; j<p4.length; j++) {
                                 ka3++;
-                                cd.at[''+(ka1+ka2)][kc][''+ka3] = p6a;
+                                cd.at[''+(ka1+ka2)][kc][''+ka3] = $.extend({},p6a);
 
                                 cd.at[''+(ka1+ka2)][kc][''+ka3].jsVarExcludes = p4[j];
-                                debugger;
                             };
 
                         //p7 = $.extend(p7,p5);
@@ -900,7 +903,6 @@ debugger;
                         cd.at[''+(ka1+ka2)][kcm1] = eval(cd.v[k1].split(':::')[1]+'()');
                         cd.at[''+(ka1+ka2)][kcf] = {};
                     };
-                    debugger;
                 }
                 //var pointer = na.m.chaseToPath (cd.root, cd.path+'/'+cd.k);
                 var pointer = na.m.chaseToPath (cd.root, cd.path);
@@ -917,7 +919,7 @@ debugger;
 
     parseOptions_conditions : function (cd) {
         const kc = 'jsCodeParam:::conditions';
-        for (var i=0; i < cd.v[kc].length; i++) {
+        for (var i in cd.v[kc]) {
             var clauseResult = cd.params.t.parseOptions_clauseResult (cd, i);
             if (!clauseResult) return false;
         }

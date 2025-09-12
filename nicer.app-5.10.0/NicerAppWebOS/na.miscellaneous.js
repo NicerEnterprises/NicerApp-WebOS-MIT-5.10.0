@@ -637,9 +637,13 @@ na.m = {
 
             };
             var pass = true;
-            if (typeof a=='object' && a!==null && a.type=='text/css') pass = false;
-            if (typeof a=='object' && a!==null && a.zoom=='') pass = false;
-            if (typeof a=='object' && a!==null && a.tagName) pass = false;
+            try {
+                if (typeof a=='object' && a!==null && a.type=='text/css') pass = false;
+                if (typeof a=='object' && a!==null && a.zoom=='') pass = false;
+                if (typeof a=='object' && a!==null && a.tagName) pass = false;
+            } catch (e) {
+                pass = false;
+            }
 
             if (pass)
             for (var k in a) {

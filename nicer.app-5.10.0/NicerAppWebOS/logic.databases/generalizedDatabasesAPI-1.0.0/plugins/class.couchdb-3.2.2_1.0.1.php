@@ -1369,10 +1369,10 @@ class class_NicerAppWebOS_database_API_couchdb_3_2 {
         $oldDB = $cdb->db;
         //var_dump ('$oldDB='.$oldDB);
         $dataSetName = $this->dataSetName('logentries');
+        $cdb->setDatabase($dataSetName, false);
         global $naLog; global $naWebOS;
 
         foreach ($entries as $k => $rec) {
-            $cdb->setDatabase($dataSetName, false);
             try {
                 $cdb->post($rec);
             } catch (Exception $e) {

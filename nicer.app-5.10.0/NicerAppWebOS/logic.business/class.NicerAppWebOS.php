@@ -2,18 +2,46 @@
 
 class NicerAppWebOS {
     public $cn = '.../NicerAppWebOS/logic.business/class.NicerAppWebOS.php::class NicerAppWebOS';
-    public $about = '';
     public $dbs = null;
     public $dbsAdmin = null;
+
+    public $basePath = '';
+    public $about = [];
+
+    public $initialized = false;
+    public $globals = null;
+    public $url = '-url-';
+    public $debug = false;
+    public $debugThemeLoading = false;
+    public $browserDebug = false;
+    public $showAllErrors = false;
+
+    public $view = '-view-';
+
+    public $baseIndentLevel = 1;
+    public $webRootPath = '-webRootPath-';
+    public $path = '-path-';
+    public $domainFolder = '-domainFolder';
+    public $domain = '-domain-';
+    public $webPath = '-webPath-';
+    public $domainPath = '-domainPath-';
+    public $domainFolderForDB = '-domainFolderForDB-';
+
+    public $cssFiles = [];
+    public $javascriptFiles = [];
+
+    public $ownerInfo = [];
+
+    public $viewsMID = '-viewsMID-';
+    public $viewsMIDpath = '-viewsMIDpath-';
+
+    public $hasDB = false;
+    public $theme = 'default';
 
     public function __construct () {
         $fncn = $this->cn.'->__construct()';
         $this->basePath = realpath(dirname(__FILE__).'/../..');
-
         $this->about = json_decode (file_get_contents(dirname(__FILE__).'/../version.json'));
-        $this->browserDebug = false;
-        $this->debug = false;
-        $this->debugThemeLoading = false;
 
         $this->baseIndentLevel = 1;
 
@@ -41,6 +69,7 @@ class NicerAppWebOS {
         $this->domainPath = $this->webRootPath.'/domains/'.$this->domainFolder;
 
 
+        /*
         $dbg = [
             $this->path,
             $this->domainFolder,
@@ -48,8 +77,11 @@ class NicerAppWebOS {
             $this->webPath,
             $this->webRootPath,
             $this->domainPath
-        ];
-        //echo '<pre style="color:green;">'; var_dump ($dbg); echo '</pre>'; //die();
+        ];*/
+        //echo '<pre style="color:green;">'; var_dump ($dbg); echo '</pre>'; die();
+    }
+
+    public function __construct2() {
 
         $rp_domain = $this->path.'/../domains/'.$this->domainFolder.'/domainConfig';
         $this->cssFiles = [
@@ -116,11 +148,13 @@ class NicerAppWebOS {
         }
 
         $content = $this->getContent();
+        //echo '<pre>'; var_dump ($content);die();
         if (array_key_exists('_desktopDefinition',$content))
             $desktopDefinition = $content['_desktopDefinition'];
         else
             $desktopDefinition = file_get_contents ($rp_domain.'/index.desktopDefinition.default.json');
 
+        global $naIsBot;
         $replacements = array (
             //'{$view}' => ( is_array($view) ? json_encode($view, JSON_PRETTY_PRINT) : '{}' ),
             '{$title}' =>
@@ -136,7 +170,8 @@ class NicerAppWebOS {
             '{$javascriptLinks}' => $javascriptLinks,
             '{$desktopDefinition}' => $desktopDefinition,
             //'{$customerHTML}' => $templateCustomer,
-            '{$pageSpecificCSS}' => ($naIsBot?'/* $naIsBot === true; no themes for you. */':$this->getPageCSS()), // uses up much CPU power and disk activity
+            //'{$pageSpecificCSS}' => ($naIsBot?'/* $naIsBot === true; no themes for you. */':$this->getPageCSS()), // uses up much CPU power and disk activity
+            '{$pageSpecificCSS}' => ($naIsBot?'/* $naIsBot === true; no themes for you. */':$content['head']), // uses up much CPU power and disk activity
             // '{$theme}' => $this->cssThemes
             //'{$viewport}' => $this->getMetaTags_viewport(),
             //'{$siteMenu_avoid}' => $siteMenu_avoid
@@ -151,7 +186,7 @@ class NicerAppWebOS {
         $replaces = array_values($replacements);
         $html = require_return($templateFile, false);
         //echo '<pre>'; var_dump ($searches); var_dump ($replaces); exit();
-        $html = timestampJSmodule ($html);
+        //$html = timestampJSmodule ($html);
         //var_dump($html); exit();
         $html5 = str_replace ($searches, $replaces, $html);
         echo $html5;
@@ -302,6 +337,7 @@ class NicerAppWebOS {
 
         if (!is_null($viewID)) $_GET['viewID'] = $viewID;
         $fncn = $this->cn.'->getContent("'.$divID.'", "'.$viewID.'") $_GET='.json_encode($_GET);
+        $debug = $this->debug;
         if ($debug) {
             echo '<pre>'; var_dump ($fncn); echo '</pre>'; //die();
             echo '<pre>'; var_dump ($this->view); echo '</pre>'; //die();
@@ -1201,7 +1237,7 @@ class NicerAppWebOS {
         //$selectorsCachedFilepath = realpath(dirname(__FILE__).'/../..').'/NicerAppWebOS/siteCache/'.$selectorsCachedFN;
         $selectorsCachedFilepath = $_SERVER['DOCUMENT_ROOT'].'/siteCache/'.$selectorsCachedFN;
 
-        $c = $this->getPageCSS_cached($id2);
+        $c = $this->getPageCSS_cached($id2, $selectorsCachedFN);
         if (is_string($c) && $c!=='') return $c;
 
         //echo '<pre style="color:lime;background:green">'; var_dump ($selectors); echo '</pre>'; exit();
@@ -1559,10 +1595,12 @@ class NicerAppWebOS {
         return $ret;
     }
 
-    public function getPageCSS_cached ($id2) {
+    public function getPageCSS_cached ($id2, $selectorsCachedFN) {
         //$path = realpath(dirname(__FILE__).'/../..').'/NicerAppWebOS/siteCache';
-        $path = $_SERVER['DOCUMENT_ROOT'].'/siteCache/'.$selectorsCachedFN;
+        $path = $this->domainPath.'/siteCache/';
+        //echo $path; die();
         $files = getFilePathList ($path, false, '/getPageCSS_.*\.idx/', null, array('file'), 1, 1, true)['files'];
+        //echo '<pre>'; var_dump($files); die();
         foreach ($files as $idx => $f) {
             $id2a = file_get_contents($f['realPath']);
             $dbg = [
@@ -2210,6 +2248,7 @@ class NicerAppWebOS {
 
                 foreach ($call->body->docs as $idx => $d) {
                     $hasRecord = true;
+                    //$debug = true;
                     if ($debug) { echo '$d='; var_dump ($d); }
                     $tn = ( isset($d->theme) ? $d->theme : 'default' );
                     //$d2 = $this->dbs->findConnection('couchdb')->cdb->get($d->_id)->body;

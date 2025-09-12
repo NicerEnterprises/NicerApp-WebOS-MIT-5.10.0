@@ -49,7 +49,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                         na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db,
                         loadedIn = s.loadedIn['#siteContent'];
 
-                        na.desktop.setConfig('content');
+                        //na.desktop.setConfig('content');
                         
                         s.settings_onload = settings;
                         settings.onHold = true; // signals a wait for na.site.loadTheme() has started
@@ -66,7 +66,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                             return (
                                 /*$('#jsPageSpecific').length > 0
                                 &&*/ $('#siteContent__content').length > 0
-                                && na.m.settings.initialized.site
+                                && na.m.desktopIdle()
                             );
                             //return true;
                         }, function () {
@@ -80,7 +80,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
 na.site.onresize_doContent({});
 na.m.preventScreenLock();
                             if (typeof settings.callback=='function') settings.callback('siteContent');
-                            na.analytics.logMetaEvent ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news (version '+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version+') is starting.');
+                            //na.analytics.logMetaEvent ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news (version '+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version+') is starting.');
                             
                             settings.onHold = false; // signals a wait for na.site.loadTheme() has ended
                             //});
@@ -159,10 +159,10 @@ na.m.preventScreenLock();
         urlp = na1.getURLparameters(),
         settings = urlp[0];
         
-        na.analytics.logMetaEvent ('start app : applications/2D/news.v'+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version);
+        //na.analytics.logMetaEvent ('start app : applications/2D/news.v'+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version);
         
             $('#siteContent .vividButton_icon_50x50').each(function(idx,el){
-                na.site.settings.buttons['#'+el.id] = new naVividButton(el);
+                na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button ({ naSite : na.site, el : el });
             });
         /*
         var loaderIconTheme = na.s.c.globals.loaderIconTheme('appLoading');
@@ -328,7 +328,7 @@ na.m.preventScreenLock();
                 q : $('#newsApp_searchbar').val().replace(' ', '%20')
             };
 
-            na.analytics.logMetaEvent ('newsApp : loadNews_searchResults() url='+url);
+            //na.analytics.logMetaEvent ('newsApp : loadNews_searchResults() url='+url);
             ajaxCommand = {
                 type : 'GET',
                 url : url,
@@ -362,7 +362,7 @@ na.m.preventScreenLock();
                     var idxStart = c.idx;
                     na.m.walkArray (data, data, undefined, na1.loadNews_get_forDateTimeRange_walkValue);
                     var itemsLoadedCount = c.idx - idxStart;
-                    na.analytics.logMetaEvent ('newsApp : loadNews_searchResults() data fetched sucessfully for itemsLoadedCount='+itemsLoadedCount+' and url='+url);
+                    //na.analytics.logMetaEvent ('newsApp : loadNews_searchResults() data fetched sucessfully for itemsLoadedCount='+itemsLoadedCount+' and url='+url);
 
                     na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.current.db = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.current.db.concat(data);
 
@@ -647,7 +647,7 @@ na.m.preventScreenLock();
             s.url = settings.section;
 
             if (c.searchQuery) url += '&q='+c.searchQuery;
-
+debugger;
             var
             ajaxCommand = {
                 type : 'GET',
@@ -708,7 +708,7 @@ na.m.preventScreenLock();
 
                             var itemsLoadedCount = c.idx - idxStart;
 
-                            na.analytics.logMetaEvent ('newsApp : loadNews_get_forDateTimeRange() data fetched sucessfully for itemsLoadedCount='+itemsLoadedCount+' and url='+url);
+                            //na.analytics.logMetaEvent ('newsApp : loadNews_get_forDateTimeRange() data fetched sucessfully for itemsLoadedCount='+itemsLoadedCount+' and url='+url);
                         } else {
                             itemsLoadedCount = 0;
                         };

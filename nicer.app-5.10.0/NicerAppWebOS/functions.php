@@ -46,7 +46,7 @@ function timestampJSmodule2 ($js) {
   $preg = preg_match_all ('/\(\s*[\'"](.*?)[\'"]\s*\)/', $js, $matches);
   $matches[2] = [];
   $matches[3] = [];
-
+debug_print_backtrace();
   foreach ($matches[1] as $idx => $relPath) {
     $rp = str_replace('/NicerAppWebOS/ajax_getModule.php?f=','',$relPath);
     if (strpos($rp,'&')===false) {
@@ -1683,6 +1683,7 @@ another example:
                             //if (!array_key_exists('files',$result)) $result['files'] = [];
                             //$result['files'][basename($filepath)] = $filepath;//DON'T! str_replace($pathStart,'',$filepath);
                             global $naWebOS;
+                            //debug_print_backtrace();die();
                             if (in_array ($ft, $fileTypesFilter))
                             if (!$returnRecursive) {
                                 $result[$idx] = [

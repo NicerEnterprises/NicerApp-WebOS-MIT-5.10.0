@@ -36,10 +36,10 @@ na.site = {
         // TODO : keep these up to date with each version number and/or label increase.
         // NOTE : all of these na.site.globals app get overridden by values stuck in databases of some sort (lol),
         //          and are listed by the index.php file as 'var naGlobals', before merging it's (sub-)values.
-        domain : 'nicer.app',
-        domainPath : '/var/www/nicer.app-5.10.0/',
+        domain : 'said.by',
+        domainPath : '/var/www/nicer.app-5.10.z/nicer.app-5.10.0/',
         domainWWWroot : 'nicer.app-5.10.0',
-        domainFolder : 'nicer.app',
+        domainFolder : 'said.by',
 
         // these are all pixel values, without the CSS 'NNNNpx' notation.
         margin : 8,
@@ -186,6 +186,11 @@ na.site = {
             console.log('Navigator Connection API not supported');
         }
 
+        na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs,'#siteTaskbar');
+        na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs,'#siteContent');
+        na.d.s.visibleDivs.push ('#siteTaskbar');
+        na.d.s.visibleDivs.push ('#siteContent');
+
         na.desktop.initialize(desktopDefinition);
 
         na.background.initialize({naSite : t});
@@ -266,7 +271,8 @@ na.site = {
                     };
                     setTimeout(function(){
                         na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
-                    },1000)
+                        //na.backgrounds.next('#siteBackground');
+                    },100)
 
                     $('.vividDialog').css ({
                         overflow : 'hidden'
@@ -452,7 +458,7 @@ na.site = {
 
     onresize_doContent : function (settings) {
         //debugger;
-        startLogo('neCompanyLogo', 'countryOfOriginColors');
+        //startLogo('neCompanyLogo', 'countryOfOriginColors');
         return false;
         /*
         if ($(window).width() < na.site.globals.reallySmallDeviceWidth) {
@@ -1487,8 +1493,8 @@ na.site = {
                     $.cookie('visible_'+divID, true);
                 };
 
-                $('#'+divID+' .vividDialogContent').fadeOut('normal', function () {
-                    var $el = $(this).parents('.vividDialog');
+                //$('#'+divID+' .vividDialogContent').fadeOut('normal', function () {
+                    var $el = $('#'+divID+' .vividDialogContent').parents('.vividDialog');
                     if (!$el) debugger;
                     var divID2 = $el[0].id;
                     if (!divID2 || divID2==='') debugger;
@@ -1548,7 +1554,7 @@ na.site = {
                         }
                     }
 
-                });
+                //});
 
             };
         };
@@ -3201,7 +3207,7 @@ na.site = {
                         //na.site.ajaxFail('na.saveTheme() : Could not save settings. Please login again.');
 
 
-        /*.fadeIn('normal', 'swing', function () {
+                        /*.fadeIn('normal', 'swing', function () {
                             setTimeout (function() {
                                 $('#siteLoginFailed').fadeOut('normal', 'swing');
                             }, 2 * 1000);

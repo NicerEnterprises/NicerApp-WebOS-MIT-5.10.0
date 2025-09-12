@@ -1,5 +1,5 @@
 {
-    ".../NicerWebAppOS/apps/NicerWebAppOS/applications/2D/musicPlayer" : {
+    ".../NicerWebAppOS/apps/NicerWebAppOS/applications/2D/musicPlayer.javascriptRendering" : {
         "defaults" : {
             "respectLatestDutchCopyrightLaws" : false,
             "reason_if_false" : {

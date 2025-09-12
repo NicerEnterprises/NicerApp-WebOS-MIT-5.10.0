@@ -158,10 +158,7 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 <div id="jsTree" style="height:calc(100% - 70px);"></div>
 <script type="text/javascript">
     $('#siteToolbarLeft').css({ width : 370 });
-    na.desktop.settings.visibleDivs.push('#siteToolbarLeft');
-    na.desktop.resize();
     na.m.waitForCondition ('#siteToolbarLeft::init() : desktopIdle()?', na.m.desktopIdle, function () {
-
         $('#btnAddUser_menu').addClass('noInitialShowing');
         $('#btnAddUser_menu').css({
             top : $('#btnAddUser_menu').offset().top + $('#btnAddUser_menu').height() + 10,
@@ -181,8 +178,8 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
             height : $('#siteToolbarLeft .vividDialogContent').height() - $('#jsTree_navBar').height() - 30
         });
 
+        debugger;
         na.cms.onload();
-
     }, 100);
 </script>
 

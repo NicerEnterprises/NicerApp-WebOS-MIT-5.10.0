@@ -100,8 +100,6 @@ NicerApp WebOS from Nicer Enterprises
             ini_set('display_startup_errors', 1);
             error_reporting(E_ALL);
 
-        if (!isset($naBypassMainErrorHandler) || $naBypassMainErrorHandler)
-            $old_error_handler = set_error_handler ('mainErrorHandler');
 
         /*
         global $mainErrorLogFilepath; global $mainErrorLogLastWriteFilepath;
@@ -109,7 +107,9 @@ NicerApp WebOS from Nicer Enterprises
         $mainErrorLogLastWriteFilepath = realpath(dirname(__FILE__)).'/siteLogs/error.'.date('Y-m-d_H.i.s').'.lastModified.txt';
         */
     }
-    ini_set ('log_errors', true);
+    if (!isset($naBypassMainErrorHandler) || $naBypassMainErrorHandler)
+      $old_error_handler = set_error_handler ('mainErrorHandler');
+    //ini_set ('log_errors', true);
     //var_dump (["test1a"=>true]); echo PHP_EOL; exit();
 
     require_once($rootPath_na.'/NicerAppWebOS/logic.business/class.NicerAppWebOS.log.php');
@@ -208,6 +208,7 @@ NicerApp WebOS from Nicer Enterprises
 
     try {
         $naWebOS = new NicerAppWebOS();
+        $naWebOS->__construct2();
     } catch (Exception $e) {
         echo '<h1>NicerApp WebOS boot.php INITIALIZATION FATAL ERROR :</h1>';
         echo '<pre>';
@@ -394,8 +395,8 @@ NicerApp WebOS from Nicer Enterprises
 
 
     global $naSettings;
-    $fnSettingsMusicPlayer2D = realpath(dirname(__FILE__)).'/apps/NicerAppWebOS/applications/2D/musicPlayer/settings.json';
-    $folderAppMusicPlayer2D = '.../NicerWebAppOS/apps/NicerWebAppOS/applications/2D/musicPlayer';
+    $fnSettingsMusicPlayer2D = realpath(dirname(__FILE__)).'/apps/NicerAppWebOS/applications/2D/musicPlayer.javascriptRendering/settings.json';
+    $folderAppMusicPlayer2D = '.../NicerWebAppOS/apps/NicerWebAppOS/applications/2D/musicPlayer.javascriptRendering';
     $naSettings = [ 'apps' => json_decode(file_get_contents($fnSettingsMusicPlayer2D),true) ];
     $rcl = 'respectLatestDutchCopyrightLaws'; // not all that important - see screenshot file in musicPlayer code folder.
     global $naSettings_app2D_musicPlayer_respectDutchCopyright;
@@ -419,14 +420,14 @@ NicerApp WebOS from Nicer Enterprises
     //$unixTimeStamp = time();//date(DATE_ATOM);//date(DATE_RFC2822);//date('Y-m-d H:i:sa');
     $timestamp = date(DATE_RFC2822);
 
-    /*
-    //if (!$naIsBot) {
-    if (false) { // TODO : Get this done via /view/logs on an as-needed basis instead!
         $headers_list = [];
         if (php_sapi_name() !== 'cli')
         foreach (getallheaders() as $name => $value) {
             array_push($headers_list, array("name" => $name, "value" => $value));
         }
+    /*
+    //if (!$naIsBot) {
+    if (false) { // TODO : Get this done via /view/logs on an as-needed basis instead!
 
         $fn = dirname(__FILE__).'/domainConfigs/'.$naWebOS->domainFolder.'/apiKey.whatismybrowser.txt';
         $api_key = file_get_contents($fn);
@@ -525,58 +526,59 @@ NicerApp WebOS from Nicer Enterprises
     };
     */
 
-    $now = DateTime::createFromFormat('U.u', microtime(true));
-    while (!is_bool($now)) {//for testing solution
-        $t = microtime(true);
-        $now = DateTime::createFromFormat('U.u', $t);
+    if ($naThisServer['log']['dbActivity']) {
+        $now = DateTime::createFromFormat('U.u', microtime(true));
+        while (!is_bool($now)) {//for testing solution
+            $t = microtime(true);
+            $now = DateTime::createFromFormat('U.u', $t);
+        }
+        if (is_bool($now)) {//the problem
+            $now = DateTime::createFromFormat('U', $t);//the solution
+        }    $s3 = (int)$now->format("u"); // milliseconds after 's2' listed below here.
+        $err = [
+            'type' => 'New request',
+            's1' => (
+                session_status() === PHP_SESSION_NONE
+                ? microtime(true)
+                : $_SESSION['started']
+            ),
+            's2' => time(),//microtime(true),
+            's3' => $s3,
+            'i' => (
+                session_status() === PHP_SESSION_NONE
+                ? false
+                : $_SESSION['startedID']
+            ),
+            'isIndex' => $_SERVER['SCRIPT_NAME']==='/NicerAppWebOS/index.php',
+            'isBot' => $naIsBot,
+            'isLAN' => $naLAN,
+            'isDesktop' => $naIsDesktop,
+            'isMobile' => $naIsMobile,
+            'headers' => $headers_list,
+            //'headersResult' => $result_json,
+            //'bd' => $bd,
+            //'bdDetails' => json_decode(json_encode($result_json), true),
+            //'ipInfo' => $ipInfo,
+            //'browserMarketSharePercentage' => $naBrowserMarketSharePercentage,
+            'to' => $dtz_offset,
+            'ts' => $timestamp,
+            'ip' => $naIP,
+            'sid' => session_id(),
+            'nav' => $naVersionNumber,
+            'request' => $dbg
+        ];
+        global $naLog;
+        $naLog->add ( [ $err ] );
+        //trigger_error ($msg, E_USER_NOTICE);
+        //echo '<pre>'; var_dump ($_SERVER); die();
+
+        ini_set ('error_log', $na_error_log_filepath_txt);
     }
-    if (is_bool($now)) {//the problem
-        $now = DateTime::createFromFormat('U', $t);//the solution
-    }    $s3 = (int)$now->format("u"); // milliseconds after 's2' listed below here.
-    $err = [
-        'type' => 'New request',
-        's1' => (
-            session_status() === PHP_SESSION_NONE
-            ? microtime(true)
-            : $_SESSION['started']
-        ),
-        's2' => time(),//microtime(true),
-        's3' => $s3,
-        'i' => (
-            session_status() === PHP_SESSION_NONE
-            ? false
-            : $_SESSION['startedID']
-        ),
-        'isIndex' => $_SERVER['SCRIPT_NAME']==='/NicerAppWebOS/index.php',
-        'isBot' => $naIsBot,
-        'isLAN' => $naLAN,
-        'isDesktop' => $naIsDesktop,
-        'isMobile' => $naIsMobile,
-        'headers' => $headers_list,
-        'headersResult' => $result_json,
-        'bd' => $bd,
-        'bdDetails' => json_decode(json_encode($result_json), true),
-        'ipInfo' => $ipInfo,
-        'browserMarketSharePercentage' => $naBrowserMarketSharePercentage,
-        'to' => $dtz_offset,
-        'ts' => $timestamp,
-        'ip' => $naIP,
-        'sid' => session_id(),
-        'nav' => $naVersionNumber,
-        'request' => $dbg
-    ];
-    global $naLog;
-    $naLog->add ( [ $err ] );
-    //trigger_error ($msg, E_USER_NOTICE);
-    //echo '<pre>'; var_dump ($_SERVER); die();
-
-    ini_set ('error_log', $na_error_log_filepath_txt);
-
     // at the *bottom* of this file (that's for good reasons),
     // you will find : require_once(dirname(__FILE__).'/apps/nicer.app/api.paymentSystems/boot.php');
     
     ini_set('memory_limit','256M');
-    set_time_limit(10); // 10 seconds
+    //set_time_limit(10); // 10 seconds
 
     //echo '<pre>'; var_dump ($_SERVER); exit();
     
