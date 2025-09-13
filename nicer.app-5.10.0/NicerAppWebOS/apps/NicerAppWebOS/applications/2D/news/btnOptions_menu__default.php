@@ -20,7 +20,7 @@
 <p style="margin:5px;padding:5px;text-align:center;width:calc(100%-10px);">Speed of putting new items on screen :</p>
 <div id="btnOptions_menu__backgroundTimeSettingsChanged_save__containerDiv">
     <div style="margin-left:10px;width:calc(100% - 20px)">
-        <input id="delayNewItemsDisplayToPage" type="checkbox" onchange="var na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db; na1.settingsChanged(event);">
+        <input id="delayNewItemsDisplayToPage" type="checkbox" checked  onchange="var na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db; na1.settingsChanged(event);" onload="var na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db; na1.settingsChanged(event);">
         <label id="delayNewItemsDisplayToPage_label" class="smallPadding" for="delayNewItemsDisplayToPage" onclick="/*setTimeout(function() {var na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db; na1.settingsChanged(event);}, 250);*/">Delay before setting new news items on the page?</label>
     </div>
     <div style="margin:10px;width:calc(100% - 40px)">

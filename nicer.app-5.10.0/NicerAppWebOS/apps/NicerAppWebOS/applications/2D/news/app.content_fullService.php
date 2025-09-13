@@ -22,6 +22,7 @@ $pageTitle = str_replace('_', '&nbsp;', $pageTitle);
 
 ?>
         <link type="text/css" rel="StyleSheet" media="screen" href="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news/index.css?changed=<?php echo $naWebOS->fileDateTimeStamp(dirname(__FILE__).'/index.css');?>"/>
+        <script type="text/javascript" src="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news/news_siteContent.source.js?changed=<?php echo $naWebOS->fileDateTimeStamp(dirname(__FILE__).'/news_siteContent.source.js');?>"></script>
         <script type="text/javascript">
             na.site.settings.loadingApps = false;
             na.site.settings.running_loadContent = false;
@@ -30,6 +31,24 @@ $pageTitle = str_replace('_', '&nbsp;', $pageTitle);
             na.site.settings.current.loadingApps = false;
             na.site.settings.current.running_loadContent = false;
             na.site.settings.current.running_loadTheme = false;
+
+            na.m.waitForCondition ('news init after na.m.htmlIdle', function() {
+                var r = (
+                    na.m.desktopIdle()
+                    && na.site.settings.current.booted
+                );
+                return r;
+            }, function () {
+                if (!na.site.globals.themes) na.site.settings = $.extend(na.site.globals, naGlobals);
+
+                na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.loadedIn['#siteContent'].onload({
+                    direction:'past',
+                    dateBegin:'<?php echo date('Y-m-d H-i-s', time()-3600);?>',
+                    dateEnd:'<?php echo date('Y-m-d H-i-s', time());?>',
+                    section : '<?php echo $view['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news']['section'];?>'
+                });
+            });
+
             if ($(window).width() < na.site.globals.smallDeviceWidth) {
                 setTimeout(function() {
                     $('#div_newsApp_info, .newsApp__header__datetime').css({display:'none'});
@@ -48,11 +67,10 @@ $pageTitle = str_replace('_', '&nbsp;', $pageTitle);
                 */
             }
         </script>
-        <script type="text/javascript" src="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news/news_siteContent.source.js?changed=<?php echo $naWebOS->fileDateTimeStamp(dirname(__FILE__).'/news_siteContent.source.js');?>"></script>
 
     
             <div id="siteContent__header" class="saHeaderInDialog" style="display:none;flex-direction:column;width:100%;">
-                <div class="content_containerDiv_container evenly">
+                <div class="content_containerDiv_container evenly" style="display:flex;width:100%;">
                     <div class="content_containerDiv_item" style="order:1;margin-right:7px;">
                         <h1 id="newsApp_title" class="newsApp_header pageTitle backdropped" style="vertical-align:middle;"><?php echo $pageTitle;?></h1>
                     </div>

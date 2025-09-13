@@ -1,11 +1,11 @@
 na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
 	about : {
 		whatsThis : 'Application code for this news app (RSS reader)',
-		copyright : 'Copyrighted (c) 2011-2022 by Rene AJM Veerman, Amsterdam, Netherlands',
-		license : 'https://nicer.app/LICENSE.txt',
+		copyright : 'Copyright (C) 2011-2025 by Rene AJM Veerman [rene.veerman.netherlands@gmail.com], Amsterdam, Netherlands',
+		license : 'https://nicer.app/license [MIT]',
 		firstCreated : '2018',
-		lastModified : '2022-10-24(Monday)',
-        version : '3.1.1'
+		lastModified : '2025-09-13(Saturday)',
+        version : '3.2.0-beta1'
 	},
 	globals : {
         dtIntervalSeconds : 60,
@@ -42,7 +42,6 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                 },
                 
 				onload : function (settings) {
-                    debugger;
                     $('.lds-facebook').fadeIn('normal');
                     na.m.waitForCondition ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news start', na.m.HTMLidle, function () {
                         var
@@ -53,7 +52,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                         
                         s.settings_onload = settings;
                         settings.onHold = true; // signals a wait for na.site.loadTheme() has started
-                        na.site.settings.current.app = '/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news';
+                        na.site.settings.app = '/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news';
 
                         $('#siteContent__header').fadeIn('normal', function () {
                             $('#siteContent__header').css({display:'flex'});
@@ -63,13 +62,16 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
 
 
                         na.m.waitForCondition('news app : siteContent dialog reappearance', function () {
+                            debugger;
                             return (
                                 /*$('#jsPageSpecific').length > 0
                                 &&*/ $('#siteContent__content').length > 0
                                 && na.m.desktopIdle()
+                                && na.site.s.current.booted
                             );
                             //return true;
                         }, function () {
+                            na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.loadedIn['#siteContent'].onresize();
                             na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.loadedIn['#siteContent'].settings.initialized = true;
                             na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].settings.loadedIn['#siteContent'].settings.ready = true;
                             document.addEventListener ('keyup', na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].onkeyup);
@@ -77,8 +79,9 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'] = {
                             delete na.m.settings.locked_displayNewNewsItems;
                             
                             na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].nestedStartApp();
-na.site.onresize_doContent({});
-na.m.preventScreenLock();
+                            na.site.onresize_doContent({});
+                            na.m.preventScreenLock();
+
                             if (typeof settings.callback=='function') settings.callback('siteContent');
                             //na.analytics.logMetaEvent ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news (version '+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version+') is starting.');
                             
@@ -156,13 +159,13 @@ na.m.preventScreenLock();
         na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db,
         dtBegin = new Date(),
         //dtQuit = new Date(dtBegin.getTime() - 1000 * 60 * 60 * 1.5), //(na.m.userDevice.isPhone ? 2.5 : 24.5)),
-        urlp = na1.getURLparameters(),
-        settings = urlp[0];
+        //urlp = na1.getURLparameters(),
+        settings = s.settings_onload;
         
         //na.analytics.logMetaEvent ('start app : applications/2D/news.v'+na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].about.version);
         
             $('#siteContent .vividButton_icon_50x50').each(function(idx,el){
-                na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button ({ naSite : na.site, el : el });
+                na.site.c.buttons['#'+el.id] = new vividUserInterface_2D_button ({ naSite : na.site, el : el });
             });
         /*
         var loaderIconTheme = na.s.c.globals.loaderIconTheme('appLoading');
@@ -441,6 +444,7 @@ na.m.preventScreenLock();
                         dnf = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].displayNews_full(),
                         full = dnf.full,
                         removed = dnf.removed;
+                        debugger;
 
                         clearInterval (c.intervalMailLogCountdown);
                         clearTimeout (c.timerDisplayNews_loop);
@@ -542,10 +546,12 @@ na.m.preventScreenLock();
         ow = ($('#siteContent')[0].offsetWidth)-20,
         oh = $('#siteContent')[0].offsetHeight;
 
+        /*
         for (var k in urlp) {
             var settings = urlp[k];
             break;
-        }
+        }*/
+        var settings = s.settings_onload;
 
         settings.direction = 'past';
         
@@ -589,7 +595,9 @@ na.m.preventScreenLock();
             na1.loadNews_get_forDateTimeRange(c.dtCurrent, c.dtEnd, settings);
         }
 
+        /*
         // get newest news items
+        debugger;
         settings.direction = 'future';
         if (
             !c.lastCurrentGet
@@ -598,7 +606,7 @@ na.m.preventScreenLock();
             c.lastCurrentGet = dtBegin;
             na1.loadNews_get_forDateTimeRange (new Date(dtBegin.getTime() - 1000 * 3600 * g.readHistory_numHours), dtBegin, settings);
         };
-
+*/
 
 
     },
@@ -703,6 +711,7 @@ debugger;
                         } catch (err) {
                             debugger;
                         }
+                        debugger;
                         if (data.length > 0) {
                             na.m.walkArray (data, data, undefined, na1.loadNews_get_forDateTimeRange_walkValue);
 
@@ -799,7 +808,6 @@ debugger;
                         //$('.newsApp__header__timer').html(c.countDownStr);
 
                         if (!c.dtCurrent) c.dtCurrent = new Date();
-                        /*
                         c.dtEnd = c.dtCurrent;
                         c.dtCurrent = new Date(c.dtEnd.getTime() - (1000 * 60 * 60 * 1.5));//c.read_loop_minutesIntoPast));
                         if (c.unread < 100) {
@@ -807,7 +815,9 @@ debugger;
                         } else {
                             clearTimeout (c.timerLoadNews_read_loop);
                             c.timerLoadNews_read_loop = setTimeout (na1.loadNews_read_loop, c.read_loop_millisecondsToDoNext);
-                        }*/
+                            debugger;
+                            na1.displayNewNewsItems();
+                        }
                     }, 200);
                 },
                 error : function (xhr, textStatus, errorThrown) {
@@ -830,16 +840,18 @@ debugger;
         na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings, c = s.current, db = c.db,
         urlp = na.site.globals.app;//na1.getURLparameters(),
 
+        /*
         for (var k in urlp) {
             var settings = {
                 section : urlp[k].section.replace(/__/g,'/').replace(/_/g,' ')
             };
             break;
-        }
+        }*/
+        var settings = s.settings_onload;
         if (typeof cd.v=='function') return false;
-        if (typeof cd.v=='object' && cd.v!==null && typeof cd.v.length=='number') debugger;
+        if (typeof cd.v=='object' && cd.v!==null && typeof cd.v.length=='number' && (cd.v.length===0 || !cd.t || !cd.de)) return false;
         if (cd.v) {
-            var it = cd.v;
+            let it = cd.v;
             c.idx++;
             it.idx = c.idx;
             it.rssURL = cd.v._id;
@@ -906,6 +918,7 @@ debugger;
         //$('.newsApp__item__outer a:not(:has(img))').animate({opacity:0.7});
 
 
+debugger;
         if (c.tries === 0) c.randomValue = randomValue;
         if (c.tries < c.randomValue) {
             if (!na1.displayNewNewsItem()) { };
@@ -958,7 +971,9 @@ debugger;
         min = 10,
         max = 300,
         delay = Math.floor(Math.random() * (max - min + 1)) + min;
-
+        if (typeof app=='string') {
+            app = JSON.parse(app);
+        }
 
         $('.lds-facebook').fadeOut('slow');
         $('.newsApp__header__countDownStr').animate({opacity:0.001});
@@ -1018,19 +1033,20 @@ debugger;
 
         var l = 0;
         while (di[l] && di[l].length==0) l++;
-        its = di[l];
+        var its = di[l];
 
         if (!its) {
             if (c.displayDebugInfo) na.site.setStatusMsg ('na1.displayNewNewsItem : c.tries==='+c.tries+', !its : return false');
             return false;
         }
 
-        while (it===null) {
+debugger;
+        while (it===null || !it.t || !it.de) {
             var
-            key = Math.floor(Math.random() * its.length);
+            key = Math.floor(Math.random() * (its.length-1));
 
             it = its[key];
-            if (!it) debugger;
+            if (!it || !it.t || !it.de) debugger;
             if (!it.displayCount) it.displayCount = -1;
             it.displayCount++;
             if (it.displayCount > 100) return false;
@@ -1045,6 +1061,7 @@ debugger;
             }
         };
 
+    debugger;
         if (found || !na1.match_searchCriteria(it)) {
             return false;
         } else {
@@ -1055,10 +1072,14 @@ debugger;
                 : 150
             ),
             prefix = '',
+            dnf = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'].displayNews_full(''),
+            full = dnf.full,
+            removed = dnf.removed;
             dnfi = na1.displayNews_formatItem (it, ''), // displayNews_formatItem() also puts the formatted item into the DOM!
             html = dnfi.html,
             htmlTooltip = dnfi.html2;
             c.dnfi = dnfi;
+            c.dnf = dnf;
 
             if (!html) {
                 if (c.displayDebugInfo) na.site.setStatusMsg ('na1.displayNewNewsItem : c.tries==='+c.tries+', !html : return false');
@@ -1100,6 +1121,7 @@ debugger;
 
             //if (c.tries>20) debugger;
 
+            debugger;
             var
             itEl = $('#newsApp__item__'+it.idx)[0],
             sp = $('.vividScrollpane', itEl)[0],
@@ -1393,6 +1415,7 @@ debugger;
         its2 = [],
         maxY = 0, max2Y = 0,
         maxX = 0, max2X = 0;
+        debugger;
         
         for (var i=0; i<its.length; i++) {
             var 
@@ -1439,9 +1462,9 @@ debugger;
         //console.log ('max='+max);
         //console.log ('c='+(container.height()-50));
         //if (max2 > container.height() - 50) full = true;
-        if (prefix=='' && $(it).position().top > container.height()-50) { full = true; }
+        if (prefix=='' && it && $(it).position().top > container.height()-50) { full = true; }
         //if (prefix=='' && maxX > container.width()-20) { full = true; }
-
+debugger;
         return {
             full : full,
             removed : removed 
@@ -1618,7 +1641,8 @@ debugger;
             if (typeof it.t=='string' && it.t!='') html+= '<div class="newsApp__item__title newsApp__item__noPaint"><div class="newsApp__item__title_bg">&nbsp;</div><div class="newsApp__item__title__container"><a class="nomod" target="newsAppItem_'+it.idx+'" href="' + it._id+'">' + it.t.replace(/\&#39;/g, '\'').replace(/#39;/g, '\'') + '</a></div></div>';
         }
         if (typeof it.de=='string' && it.de.trim()!=='') html+= '<div class="newsApp__item__contentContainer"><div class="newsApp__item__mediaSingle"></div><div id="newsApp_item_'+it.idx+'__scrollpane" class="newsApp__item__desc vividScrollpane" style=""><div>' + it.de.replace(/\&#39;/g, '\'').replace(/#39;/g, '\'').replace(/\<a/g, '<a target="_new" ') + '</div></div></td></tr></table><div class="newsApp__item__noPaint" style="height:5px;overflow:hidden;"></div></div>';
-        var appSettings = na.site.globals.app[na.site.globals.appPrefix+'applications/2D/news'];
+        var appSettings2 = JSON.parse(na.site.globals.app);
+        for (var k in appSettings2) var appSettings = appSettings2[k];
         //debugger;
         if (appSettings.seoValue) {
             var seov = appSettings.seoValue;
@@ -1675,6 +1699,7 @@ debugger;
             width : '100%',
             height : '100%'
         });
+        $(el).css({height:'fit-content'});
 
         /*
         $(el).find('img, iframe').each(function(idx,el){
@@ -1905,8 +1930,11 @@ debugger;
     },
 
     onresize : function (settings, displayNews) {
-        clearTimeout (na.te.s.c.timeout_onresize);
-        na.te.s.c.timeout_onresize = setTimeout (function() { // na.desktop.resize delay buffer
+            var
+            na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings,
+            c = s.current, db = c.db;
+        clearTimeout (c.timeout_onresize);
+        c.timeout_onresize = setTimeout (function() { // na.desktop.resize delay buffer
             var
             na1 = na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news'], g = na1.globals, s = na1.settings,
             c = s.current, db = c.db;
@@ -1927,8 +1955,8 @@ debugger;
             $('#siteContent__btnOptions_menu').detach().appendTo('body').css({display:'block',opacity:0.0001});
             $('.vividButton, .vividButton_icon_50x50_siteTop, .vividButton_icon_50x50', $('#siteContent__btnOptions_menu')[0])
                 .each(function(idx,el){
-                    if (!na.site.settings.buttons['#'+el.id])
-                        na.site.settings.buttons['#'+el.id] = new naVividButton(el);
+                    if (!na.site.c.buttons['#'+el.id])
+                        na.site.c.buttons['#'+el.id] = new naVividButton(el);
                 });
             setTimeout (function() {
                 $('#siteContent__btnOptions_menu').css({display:'block',opacity:0.0001});

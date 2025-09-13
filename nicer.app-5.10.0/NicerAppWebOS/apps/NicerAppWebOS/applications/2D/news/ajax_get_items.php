@@ -72,7 +72,7 @@ global $naWebOS;
                     '$regex' => '^/'.str_replace('_',' ',str_replace('__','/',$_REQUEST['section'])).'.*'
                 ]
             ),
-            'limit' => 5000,
+            'limit' => 10*1000,
             'use_index' => '_design/f8296ee26307f4441eaf3723ab3c982e996830a1',
             'fields' => array ('_id', '_rev', 't', 'de', 'm', 'am', 'pd', 'pubDate', 'da', 'dd', 'c', 'cc' )
         );

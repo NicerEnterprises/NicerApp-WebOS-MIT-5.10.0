@@ -287,11 +287,11 @@ na.site = {
                     $('.lds-facebook').fadeOut('normal');
 
                     t.startTooltips();
-                    /*setTimeout (function(){
+                    setInterval (function(){
                         na.background.next('#siteBackground');
-                    }, 60 * 1000)
+                    }, 60 * 1000);
                     //na.background.next('#siteBackground');
-                    */
+
 
                     na.te.onload('siteContent');
                     t.setSpecificity();
@@ -1099,6 +1099,7 @@ na.site = {
      */
 
         $('.lds-facebook').fadeOut('normal');
+        debugger;
 
         var
         c = na.site.settings,
@@ -1345,14 +1346,14 @@ na.site = {
 
 
         $('.vividDialog'/*, vdc[0]*/).each(function(idx,el){
-            if (!na.site.settings.dialogs['#'+el.id]) na.site.settings.dialogs['#'+el.id] = new vividUserInterface_2D_dialog(el);
+            if (!na.site.c.dialogs['#'+el.id]) na.site.c.dialogs['#'+el.id] = new vividUserInterface_2D_dialog(el);
         });
         $('#siteContent > .vividDialogContent').css({scale:1});
 
 
         $('.vividButton4, .vividButton, .vividButton_icon_50x50_siteTop, .vividButton_icon_50x50').each(function(idx,el){
             //if (el.id=='btnShowStartMenu') debugger;
-            if (!na.site.settings.buttons['#'+el.id]) na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button(el);
+            if (!na.site.c.buttons['#'+el.id]) na.site.c.buttons['#'+el.id] = new vividUserInterface_2D_button(el);
         });
 
         if ( !$('#btnShowStartMenu')[0].naInitializedAlreadyHere ) {
@@ -1598,7 +1599,7 @@ na.site = {
         //c.startingApps = true;
 
         na.m.waitForCondition (fncn+' : are the apps loaded, and their scripts fully loaded into the page\'s <HEAD>? na.m.HTMLidle()?', function () {
-            var r = na.m.HTMLidle();//na.m.WebOSidle===too restrictive,
+            var r = na.m.WebOSidle();//na.m.WebOSidle===too restrictive,
             return r;
         }, function () { //[1]
                 var c = na.site.settings.current;
@@ -3278,6 +3279,7 @@ na.site = {
 
         //if (!themeData.themeSettings.Extras)
         try {
+            if (!themeData.themeSettings) themeData.themeSettings = {};
             themeData.themeSettings.Extras = na.te.transform_jsTree_to_siteGlobalsThemes();
         } catch (err) {
             debugger;

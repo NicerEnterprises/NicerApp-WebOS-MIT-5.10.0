@@ -1373,6 +1373,7 @@ class NicerAppWebOS {
                         if (array_key_exists('apps',$_GET)) $r .= "\tapps : ".json_encode($_GET['apps']).PHP_EOL;
                     $r .= '});'.PHP_EOL;
                     $r .= '$(document).ready(function() {'.PHP_EOL;
+                        $r .= 'if (!na.site.globals.themes) na.site.settings = $.extend(na.site.globals, naGlobals);'.PHP_EOL;
                         $r .= 'if (!na.site.settings.url) na.site.settings = $.extend(na.site.settings, {'.PHP_EOL;
                             $r .= "\turl : ".json_encode($this->url).PHP_EOL;
                         $r .= "});".PHP_EOL;
@@ -1570,6 +1571,7 @@ class NicerAppWebOS {
                             $r .= "\tapp : ".json_encode($this->view).','.PHP_EOL;
                         $r .= '});'.PHP_EOL;
                         $r .= '$(document).ready(function() {'.PHP_EOL;
+                            $r .= 'if (!na.site.globals.themes) na.site.settings = $.extend(na.site.globals, naGlobals);'.PHP_EOL;
                             $r .= 'if (!na.site.settings.url) na.site.settings = $.extend(na.site.settings, {'.PHP_EOL;
                                 $r .= "\turl : ".json_encode($this->url).PHP_EOL;
                             $r .= '});'.PHP_EOL;
