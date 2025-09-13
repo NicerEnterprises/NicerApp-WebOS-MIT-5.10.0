@@ -1046,9 +1046,9 @@ debugger;
             key = Math.floor(Math.random() * (its.length-1));
 
             it = its[key];
-            if (!it || !it.t || !it.de) debugger;
             if (!it.displayCount) it.displayCount = -1;
             it.displayCount++;
+            if (!it || !it.t || !it.de) debugger;
             if (it.displayCount > 100) return false;
 
             if (typeof it.displayCount=='number' && it.displayCount > 0) {
@@ -1240,8 +1240,8 @@ debugger;
         c.timeout_onresize_loadTheme = setTimeout (function() {
             na.m.waitForCondition('na1.onresize() : safe to call na.site.loadTheme_applySettings?', function() {
                 return (
-                    !na.site.settings.current.running_loadTheme
-                    && !na.site.settings.current.running_saveTheme
+                    !na.site.settings.running_loadTheme
+                    && !na.site.settings.running_saveTheme
                 );
             }, function () {
                 na.site.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName], null, false);

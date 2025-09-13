@@ -3,7 +3,7 @@
     global $naWebOS;
     error_reporting (E_ALL);
 ?>
-<div id="btnOptions_menu__background"></div>
+<div id="btnOptions_menu__background" style="background:rgba(0,50,0,0.555)"></div>
 
 <p style="margin:5px;padding:5px;text-align:center;width:calc(100%-10px);">Set the time to show only the background during page switches :</p>
 <div id="btnOptions_menu__backgroundTimeSettingsChanged_save__containerDiv">

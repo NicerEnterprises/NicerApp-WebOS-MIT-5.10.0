@@ -33,7 +33,7 @@
     margin : 12px;
     padding : 5px;
     border-radius:10px;
-    box-shadow: inset 2px 2px 4px 2px rgba(230, 255, 255, 0.7), 3px 3px 2px 1px rgba(0,0,0,0.7);
+    box-shadow: inset 2px 2px 4px 2px rgba(230, 255, 255, 0.7), 3px 3px 5px 2px rgba(0,0,0,0.7);
     animation : anim_itemOuter_normal 1s forwards;
 }
 
@@ -247,8 +247,8 @@
 }
 .newsApp__item__footer {
     background : rgba(0,0,50,0.55);
-    padding : 5px;
-    margin : 1px;
+    padding : 10px;
+    margin : 5px;
     border-radius : 8px;
     box-shadow : inset 0px 0px 5px 3px rgba(0,0,0,0.57) !important;
 }
